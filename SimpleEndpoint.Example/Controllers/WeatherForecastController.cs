@@ -27,8 +27,6 @@ namespace SimpleEndpoint.Example.Controllers
 
         protected override async Task<ActionResult<List<WeatherForecast>>> HandleAsync(CancellationToken cancellationToken = default)
         {
-            _logger.LogInformation(JsonConvert.SerializeObject(Formatting.Indented));
-
             var rng = new Random();
             return await Task.FromResult(Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {

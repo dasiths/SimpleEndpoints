@@ -1,0 +1,31 @@
+name: Build Master
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.101
+        source-url: https://api.nuget.org/v3/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{secrets.NUGET_APIKEY}}
+    - name: Build with dotnet
+      run: dotnet build --configuration Release
+      working-directory: ./src
+    - name: Create the package
+      run: dotnet pack --configuration Release SimpleEndPoints
+      working-directory: ./src
+    - name: Publish the package to GPR
+      run: dotnet nuget push SimpleEndPoints/bin/Release/*.nupkg
+      working-directory: ./src

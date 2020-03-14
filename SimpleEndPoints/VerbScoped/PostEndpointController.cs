@@ -1,20 +1,20 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using SimpleEndpoint.Core;
+using SimpleEndpoints.Core;
 
-namespace SimpleEndpoint.VerbScoped
+namespace SimpleEndpoints.VerbScoped
 {
-    [Controller]
+    [ApiController]
     [Route("[controller]")]
-    public abstract class AsyncPostEndpointController<TRequest> : AsyncEmptyResponseEndpointController<TRequest>
+    public abstract class AsyncPostEndpointController<TRequest> : AsyncEndpointControllerWithRequest<TRequest>
     {
         [HttpPost]
         public virtual Task<IActionResult> Post(TRequest model, CancellationToken cancellationToken = default) =>
             HandleAsync(model, cancellationToken);
     }
 
-    [Controller]
+    [ApiController]
     [Route("[controller]")]
     public abstract class AsyncPostEndpointController<TRequest, TResponse> : AsyncEndpointController<TRequest, TResponse>
     {
@@ -23,16 +23,16 @@ namespace SimpleEndpoint.VerbScoped
             HandleAsync(model, cancellationToken);
     }
 
-    [Controller]
+    [ApiController]
     [Route("[controller]")]
-    public abstract class PostEndpointController<TRequest> : EmptyResponseEndpointController<TRequest>
+    public abstract class PostEndpointController<TRequest> : EndpointControllerWithRequest<TRequest>
     {
         [HttpPost]
         public virtual IActionResult Post(TRequest model) =>
             Handle(model);
     }
 
-    [Controller]
+    [ApiController]
     [Route("[controller]")]
     public abstract class PostEndpointController<TRequest, TResponse> : EndpointController<TRequest, TResponse>
     {

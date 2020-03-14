@@ -1,4 +1,4 @@
-﻿namespace SimpleEndpoint.Example.Models
+﻿namespace SimpleEndpoints.Example.Models
 {
     public class SimpleResponse
     {

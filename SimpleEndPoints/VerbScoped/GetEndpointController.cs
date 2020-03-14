@@ -1,11 +1,11 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using SimpleEndpoint.Core;
+using SimpleEndpoints.Core;
 
-namespace SimpleEndpoint.VerbScoped
+namespace SimpleEndpoints.VerbScoped
 {
-    [Controller]
+    [ApiController]
     [Route("[controller]")]
     public abstract class AsyncGetEndpointController : AsyncEndpointController
     {
@@ -14,16 +14,16 @@ namespace SimpleEndpoint.VerbScoped
             HandleAsync(cancellationToken);
     }
 
-    [Controller]
+    [ApiController]
     [Route("[controller]")]
-    public abstract class AsyncEmptyResponseGetEndpointController<TRequest> : AsyncEmptyResponseEndpointController<TRequest>
+    public abstract class AsyncGetEndpointControllerWithRequest<TRequest> : AsyncEndpointControllerWithRequest<TRequest>
     {
         [HttpGet]
         public virtual Task<IActionResult> Get(TRequest model, CancellationToken cancellationToken = default) =>
             HandleAsync(model, cancellationToken);
     }
 
-    [Controller]
+    [ApiController]
     [Route("[controller]")]
     public abstract class AsyncGetEndpointController<TResponse> : AsyncEndpointController<TResponse>
     {
@@ -32,7 +32,7 @@ namespace SimpleEndpoint.VerbScoped
             HandleAsync(cancellationToken);
     }
 
-    [Controller]
+    [ApiController]
     [Route("[controller]")]
     public abstract class AsyncGetEndpointController<TRequest, TResponse> : AsyncEndpointController<TRequest, TResponse>
     {
@@ -41,7 +41,7 @@ namespace SimpleEndpoint.VerbScoped
             HandleAsync(model, cancellationToken);
     }
 
-    [Controller]
+    [ApiController]
     [Route("[controller]")]
     public abstract class GetEndpointController : EndpointController
     {
@@ -50,7 +50,7 @@ namespace SimpleEndpoint.VerbScoped
             Handle();
     }
 
-    [Controller]
+    [ApiController]
     [Route("[controller]")]
     public abstract class GetEndpointController<TResponse> : EndpointController<TResponse>
     {
@@ -59,16 +59,16 @@ namespace SimpleEndpoint.VerbScoped
             Handle();
     }
 
-    [Controller]
+    [ApiController]
     [Route("[controller]")]
-    public abstract class EmptyResponseGetEndpointController<TRequest> : EmptyResponseEndpointController<TRequest>
+    public abstract class GetEndpointControllerWithRequest<TRequest> : EndpointControllerWithRequest<TRequest>
     {
         [HttpGet]
         public virtual IActionResult Get(TRequest model) =>
             Handle(model);
     }
 
-    [Controller]
+    [ApiController]
     [Route("[controller]")]
     public abstract class GetEndpointController<TRequest, TResponse> : EndpointController<TRequest, TResponse>
     {

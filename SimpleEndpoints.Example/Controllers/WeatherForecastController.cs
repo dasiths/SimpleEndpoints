@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using SimpleEndpoint.Example.Models;
-using SimpleEndpoint.VerbScoped;
+using SimpleEndpoints.Example.Models;
+using SimpleEndpoints.VerbScoped;
 
-namespace SimpleEndpoint.Example.Controllers
+namespace SimpleEndpoints.Example.Controllers
 {
     public class WeatherForecastController : AsyncGetEndpointController<List<WeatherForecast>>
     {
@@ -17,13 +17,6 @@ namespace SimpleEndpoint.Example.Controllers
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
-
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
-        {
-            _logger = logger;
-        }
 
         protected override async Task<ActionResult<List<WeatherForecast>>> HandleAsync(CancellationToken cancellationToken = default)
         {

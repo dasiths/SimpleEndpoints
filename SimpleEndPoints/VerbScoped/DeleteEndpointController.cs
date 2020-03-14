@@ -1,20 +1,20 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using SimpleEndpoint.Core;
+using SimpleEndpoints.Core;
 
-namespace SimpleEndpoint.VerbScoped
+namespace SimpleEndpoints.VerbScoped
 {
-    [Controller]
+    [ApiController]
     [Route("[controller]")]
-    public abstract class AsyncDeleteEndpointController<TRequest> : AsyncEmptyResponseEndpointController<TRequest>
+    public abstract class AsyncDeleteEndpointController<TRequest> : AsyncEndpointControllerWithRequest<TRequest>
     {
         [HttpDelete]
         public virtual Task<IActionResult> Delete(TRequest model, CancellationToken cancellationToken = default) =>
             HandleAsync(model, cancellationToken);
     }
 
-    [Controller]
+    [ApiController]
     [Route("[controller]")]
     public abstract class AsyncDeleteEndpointController<TRequest, TResponse> : AsyncEndpointController<TRequest, TResponse>
     {
@@ -23,16 +23,16 @@ namespace SimpleEndpoint.VerbScoped
             HandleAsync(model, cancellationToken);
     }
 
-    [Controller]
+    [ApiController]
     [Route("[controller]")]
-    public abstract class DeleteEndpointController<TRequest> : EmptyResponseEndpointController<TRequest>
+    public abstract class DeleteEndpointController<TRequest> : EndpointControllerWithRequest<TRequest>
     {
         [HttpDelete]
         public virtual IActionResult Delete(TRequest model) =>
             Handle(model);
     }
 
-    [Controller]
+    [ApiController]
     [Route("[controller]")]
     public abstract class DeleteEndpointController<TRequest, TResponse> : EndpointController<TRequest, TResponse>
     {

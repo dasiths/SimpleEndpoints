@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace SimpleEndpoint.Core
+namespace SimpleEndpoints.Core
 {
-    [Controller]
+    [ApiController]
     [Route("[controller]")]
     public abstract class AsyncEndpointController : ControllerBase
     {
@@ -12,15 +12,15 @@ namespace SimpleEndpoint.Core
         protected abstract Task<IActionResult> HandleAsync(CancellationToken cancellationToken = default);
     }
 
-    [Controller]
+    [ApiController]
     [Route("[controller]")]
-    public abstract class AsyncEmptyResponseEndpointController<TRequest> : ControllerBase
+    public abstract class AsyncEndpointControllerWithRequest<TRequest> : ControllerBase
     {
         [NonAction]
         protected abstract Task<IActionResult> HandleAsync(TRequest requestModel, CancellationToken cancellationToken = default);
     }
 
-    [Controller]
+    [ApiController]
     [Route("[controller]")]
     public abstract class AsyncEndpointController<TResponse> : ControllerBase
     {
@@ -28,7 +28,7 @@ namespace SimpleEndpoint.Core
         protected abstract Task<ActionResult<TResponse>> HandleAsync(CancellationToken cancellationToken = default);
     }
 
-    [Controller]
+    [ApiController]
     [Route("[controller]")]
     public abstract class AsyncEndpointController<TRequest, TResponse> : ControllerBase
     {
@@ -36,7 +36,7 @@ namespace SimpleEndpoint.Core
         protected abstract Task<ActionResult<TResponse>> HandleAsync(TRequest requestModel, CancellationToken cancellationToken = default);
     }
 
-    [Controller]
+    [ApiController]
     [Route("[controller]")]
     public abstract class EndpointController : ControllerBase
     {
@@ -44,15 +44,15 @@ namespace SimpleEndpoint.Core
         protected abstract IActionResult Handle();
     }
 
-    [Controller]
+    [ApiController]
     [Route("[controller]")]
-    public abstract class EmptyResponseEndpointController<TRequest> : ControllerBase
+    public abstract class EndpointControllerWithRequest<TRequest> : ControllerBase
     {
         [NonAction]
         protected abstract IActionResult Handle(TRequest requestModel);
     }
 
-    [Controller]
+    [ApiController]
     [Route("[controller]")]
     public abstract class EndpointController<TResponse> : ControllerBase
     {
@@ -60,7 +60,7 @@ namespace SimpleEndpoint.Core
         protected abstract ActionResult<TResponse> Handle();
     }
 
-    [Controller]
+    [ApiController]
     [Route("[controller]")]
     public abstract class EndpointController<TRequest, TResponse> : ControllerBase
     {

@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29326.143
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleEndpoint.Example", "SimpleEndpoint.Example\SimpleEndpoint.Example.csproj", "{F8121641-4AD6-45E4-957C-73824EEEBB08}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleEndpoint.Example", "SimpleEndpoints.Example\SimpleEndpoints.Example.csproj", "{F8121641-4AD6-45E4-957C-73824EEEBB08}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleEndpoint", "SimpleEndPoint\SimpleEndpoint.csproj", "{06D8DE86-AC08-452C-882D-6F57CFF4835E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleEndpoint", "SimpleEndPoints\SimpleEndpoints.csproj", "{06D8DE86-AC08-452C-882D-6F57CFF4835E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

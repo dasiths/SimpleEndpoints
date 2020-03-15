@@ -1,6 +1,6 @@
 using System;
 
-namespace SimpleEndpoints.Example.Models
+namespace SimpleEndpoints.Example.Endpoints.WeatherForecast
 {
     public class WeatherForecast
     {

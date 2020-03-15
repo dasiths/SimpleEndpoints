@@ -5,64 +5,64 @@ using Microsoft.AspNetCore.Mvc;
 namespace SimpleEndpoints.Core
 {
     [ApiController]
-    [Route("[controller]")]
-    public abstract class AsyncEndpointController : ControllerBase
+    [Route("[endpoint]")]
+    public abstract class AsyncEndpoint : ControllerBase
     {
         [NonAction]
         protected abstract Task<IActionResult> HandleAsync(CancellationToken cancellationToken = default);
     }
 
     [ApiController]
-    [Route("[controller]")]
-    public abstract class AsyncEndpointControllerWithRequest<TRequest> : ControllerBase
+    [Route("[endpoint]")]
+    public abstract class AsyncEndpointWithRequest<TRequest> : ControllerBase
     {
         [NonAction]
         protected abstract Task<IActionResult> HandleAsync(TRequest requestModel, CancellationToken cancellationToken = default);
     }
 
     [ApiController]
-    [Route("[controller]")]
-    public abstract class AsyncEndpointController<TResponse> : ControllerBase
+    [Route("[endpoint]")]
+    public abstract class AsyncEndpoint<TResponse> : ControllerBase
     {
         [NonAction]
         protected abstract Task<ActionResult<TResponse>> HandleAsync(CancellationToken cancellationToken = default);
     }
 
     [ApiController]
-    [Route("[controller]")]
-    public abstract class AsyncEndpointController<TRequest, TResponse> : ControllerBase
+    [Route("[endpoint]")]
+    public abstract class AsyncEndpoint<TRequest, TResponse> : ControllerBase
     {
         [NonAction]
         protected abstract Task<ActionResult<TResponse>> HandleAsync(TRequest requestModel, CancellationToken cancellationToken = default);
     }
 
     [ApiController]
-    [Route("[controller]")]
-    public abstract class EndpointController : ControllerBase
+    [Route("[endpoint]")]
+    public abstract class Endpoint : ControllerBase
     {
         [NonAction]
         protected abstract IActionResult Handle();
     }
 
     [ApiController]
-    [Route("[controller]")]
-    public abstract class EndpointControllerWithRequest<TRequest> : ControllerBase
+    [Route("[endpoint]")]
+    public abstract class EndpointWithRequest<TRequest> : ControllerBase
     {
         [NonAction]
         protected abstract IActionResult Handle(TRequest requestModel);
     }
 
     [ApiController]
-    [Route("[controller]")]
-    public abstract class EndpointController<TResponse> : ControllerBase
+    [Route("[endpoint]")]
+    public abstract class Endpoint<TResponse> : ControllerBase
     {
         [NonAction]
         protected abstract ActionResult<TResponse> Handle();
     }
 
     [ApiController]
-    [Route("[controller]")]
-    public abstract class EndpointController<TRequest, TResponse> : ControllerBase
+    [Route("[endpoint]")]
+    public abstract class Endpoint<TRequest, TResponse> : ControllerBase
     {
         [NonAction]
         protected abstract ActionResult<TResponse> Handle(TRequest requestModel);

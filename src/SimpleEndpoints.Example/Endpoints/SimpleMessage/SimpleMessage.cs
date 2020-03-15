@@ -1,5 +1,5 @@
 ﻿
-namespace SimpleEndpoints.Example.Models
+namespace SimpleEndpoints.Example.Endpoints.SimpleMessage
 {
     public class SimpleMessage
     {

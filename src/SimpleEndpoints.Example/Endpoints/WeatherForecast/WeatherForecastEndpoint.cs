@@ -4,14 +4,11 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using SimpleEndpoints.Example.Models;
 using SimpleEndpoints.VerbScoped;
 
-namespace SimpleEndpoints.Example.Controllers
+namespace SimpleEndpoints.Example.Endpoints.WeatherForecast
 {
-    public class WeatherForecastController : AsyncGetEndpointController<List<WeatherForecast>>
+    public class WeatherForecastEndpoint : AsyncGetEndpoint<List<WeatherForecast>>
     {
         private static readonly string[] Summaries = new[]
         {

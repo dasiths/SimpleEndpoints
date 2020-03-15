@@ -20,6 +20,9 @@ jobs:
     - name: Build with dotnet
       run: dotnet build --configuration Release
       working-directory: ./src
+    - name: Test with dotnet
+      run: dotnet test
+      working-directory: ./src
     - name: Create the package
       run: dotnet pack --configuration Release SimpleEndPoints
       working-directory: ./src

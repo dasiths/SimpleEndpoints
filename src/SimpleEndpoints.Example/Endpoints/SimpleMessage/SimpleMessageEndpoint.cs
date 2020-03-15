@@ -1,12 +1,11 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using SimpleEndpoints.Example.Models;
 using SimpleEndpoints.VerbScoped;
 
-namespace SimpleEndpoints.Example.Controllers
+namespace SimpleEndpoints.Example.Endpoints.SimpleMessage
 {
-    public class SimpleMessageController : AsyncPostEndpointController<SimpleMessage, SimpleResponse>
+    public class SimpleMessageEndpoint : AsyncPostEndpoint<SimpleMessage, SimpleResponse>
     {
         // Override if you want to change the default behaviour such as model binding
         // Here we force it to use the [FromQuery] model binding instead of the default [FromBody] and define a custom Route

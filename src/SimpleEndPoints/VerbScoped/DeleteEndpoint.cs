@@ -5,40 +5,32 @@ using SimpleEndpoints.Core;
 
 namespace SimpleEndpoints.VerbScoped
 {
-    [ApiController]
-    [Route("[controller]")]
-    public abstract class AsyncDeleteEndpointController<TRequest> : AsyncEndpointControllerWithRequest<TRequest>
+
+    public abstract class AsyncDeleteEndpoint<TRequest> : AsyncEndpointWithRequest<TRequest>
     {
         [HttpDelete]
         public virtual Task<IActionResult> Delete(TRequest model, CancellationToken cancellationToken = default) =>
             HandleAsync(model, cancellationToken);
     }
 
-    [ApiController]
-    [Route("[controller]")]
-    public abstract class AsyncDeleteEndpointController<TRequest, TResponse> : AsyncEndpointController<TRequest, TResponse>
+    public abstract class AsyncDeleteEndpoint<TRequest, TResponse> : AsyncEndpoint<TRequest, TResponse>
     {
         [HttpDelete]
         public virtual Task<ActionResult<TResponse>> Delete(TRequest model, CancellationToken cancellationToken = default) =>
             HandleAsync(model, cancellationToken);
     }
 
-    [ApiController]
-    [Route("[controller]")]
-    public abstract class DeleteEndpointController<TRequest> : EndpointControllerWithRequest<TRequest>
+    public abstract class DeleteEndpoint<TRequest> : EndpointWithRequest<TRequest>
     {
         [HttpDelete]
         public virtual IActionResult Delete(TRequest model) =>
             Handle(model);
     }
 
-    [ApiController]
-    [Route("[controller]")]
-    public abstract class DeleteEndpointController<TRequest, TResponse> : EndpointController<TRequest, TResponse>
+    public abstract class DeleteEndpoint<TRequest, TResponse> : Endpoint<TRequest, TResponse>
     {
         [HttpDelete]
         public virtual ActionResult<TResponse> Delete(TRequest model) =>
             Handle(model);
     }
-
 }

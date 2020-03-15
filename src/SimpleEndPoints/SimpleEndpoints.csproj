@@ -3,14 +3,14 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageProjectUrl>https://github.com/dasiths/SimpleEndpoints</PackageProjectUrl>
-    <Description>Convention based lightweight controller per action pattern using aspnetcore 3.0 endpoints</Description>
+    <Description>A simple, convention-based, endpoint per action pattern implementation for AspNetCore 3.0+</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Copyright>2020 Dasith Wijesiriwardena</Copyright>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RepositoryUrl>https://github.com/dasiths/SimpleEndpoints</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
     <PackageTags>aspnetcore api controller endpoints</PackageTags>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
   </PropertyGroup>
 
   <ItemGroup>

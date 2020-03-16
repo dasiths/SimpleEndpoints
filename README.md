@@ -1,8 +1,9 @@
 # SimpleEndpoints ![Build Master](https://github.com/dasiths/SimpleEndpoints/workflows/Build%20Master/badge.svg?branch=master) [![NuGet](https://img.shields.io/nuget/v/SimpleEndpoints.svg)](https://www.nuget.org/packages/SimpleEndpoints)
+ 
+ ### A simple, convention-based, endpoint per action pattern implementation for AspNetCore 3.0+
 
-### A simple, convention-based, endpoint per action pattern implementation for AspNetCore 3.0+
-  
----
+ 
+<img src="./assets/logo.png" alt="Logo" width="200"/>
 
 ## Getting Started
 

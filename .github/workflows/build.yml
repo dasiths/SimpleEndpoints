@@ -27,5 +27,5 @@ jobs:
       run: dotnet pack --configuration Release SimpleEndPoints
       working-directory: ./src
     - name: Publish the package to NUGET.ORG
-      run: dotnet nuget push SimpleEndPoints/bin/Release/*.nupkg -k ${{secrets.NUGET_APIKEY}} -s https://api.nuget.org/v3/index.json
+      run: dotnet nuget push SimpleEndPoints/bin/Release/*.nupkg -k ${{secrets.NUGET_APIKEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
       working-directory: ./src

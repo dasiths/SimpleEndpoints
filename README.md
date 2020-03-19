@@ -1,9 +1,12 @@
 # SimpleEndpoints ![Build Master](https://github.com/dasiths/SimpleEndpoints/workflows/Build%20Master/badge.svg?branch=master) [![NuGet](https://img.shields.io/nuget/v/SimpleEndpoints.svg)](https://www.nuget.org/packages/SimpleEndpoints)
  
  ### A simple, convention-based, endpoint per action pattern implementation for AspNetCore 3.0+
-
  
 <img src="./assets/logo.png" alt="Logo" width="200"/>
+
+## Motivation
+
+The aim of this pattern is to get away from the bloated god controllers that have a million action methods and so many dependencies. By following the SimpleEndpoints pattern we keep the endpoint scoped to a small feature and lightweight which makes it easier to understand and manage. The aim is not to blur the line between the controllers and the domain layer. You can choose to dispatch the request to the domain from the endpoint or handle it in the endpoint itself. Make an infromed choice based to the context.
 
 ## Getting Started
 
@@ -27,16 +30,18 @@ In the NuGet Package Manager Console, type:
         public string Message { get; set; }
     }
 ```
-3. Create your endpoint and implement your business logic
+3. Create your endpoint and implement your business logic (You can choose to handle in place or dispatch to a domain layer)
 ```C#
     public class SimpleMessageEndpoint : AsyncGetEndpoint<SimpleMessage, SimpleResponse>
     {
         protected override async Task<ActionResult<SimpleResponse>> HandleAsync(SimpleMessage requestModel, CancellationToken cancellationToken = default)
-        {
-            return await Task.FromResult(new SimpleResponse()
+        {	
+	    // Handle in place or dispatch to the domain i.e. return await _someDomainService.HandleAsync(requestModel)
+	
+            return new SimpleResponse()
             {
                 Message = "Hello " + requestModel.Message
-            });
+            };
         }
     }
 ```

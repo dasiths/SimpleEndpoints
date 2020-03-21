@@ -8,7 +8,7 @@
 
 The aim of this pattern is to get away from the bloated god controllers that have a million action methods and so many dependencies. By following the SimpleEndpoints pattern we keep the endpoint scoped to a small feature and lightweight which makes it easier to understand and manage. The aim is not to blur the line between the controllers and the domain layer. You can choose to dispatch the request to the domain from the endpoint or handle it in the endpoint itself. Make an informed choice based to the context.
 
-More about it in the [blog post here](https://dasith.me/2020/03/21/simple-endpoints/)
+More about it in the [blog post here](https://dasith.me/2020/03/21/simple-endpoints/).
 
 ## Getting Started
 
@@ -70,21 +70,21 @@ Checkout the [Examples folder](https://github.com/dasiths/SimpleEndpoints/tree/m
 
 The Endpoints are automatically inherited from a [`ControllerBase`](https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.controllerbase?view=aspnetcore-3.1) and decorated with [`ApiController` attribute](https://www.strathweb.com/2018/02/exploring-the-apicontrollerattribute-and-its-features-for-asp-net-core-mvc-2-1/). You can decorate the endpoint class/action method with the usual (Route, HttpGet, FromQuery etc) attributes to customise and extend the functionality. Endpoints fully support [AspNetCore routing conventions](https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/routing?view=aspnetcore-3.1).
 
-if you need need an endpoint with a custom route, a mix of parameters coming from the Route/Query/Body or need full control over of any aspect then you can do something like this. Each of these class/method attributes works independently of each other and you can pick and choose them as required.
+If you really need an endpoint with a custom route, a mix of parameters coming from the Route/Query/Body or need full control over of any aspect then you can do something like this. Each of these class/method attributes works independently of each other and you can pick and choose them as required.
 
 ```c#
     [Route("api/some-path/[endpoint]")] //results in "api/some-path/mycustom"
     public class MyCustomEndpoint : AsyncEndpoint<Request, Result>
     {
-        [NonAction] // important: mark this as non action to ignore this in api
+        [NonAction] // important: mark this as non action to ignore this method when routing
         public override async Task<ActionResult<Result>> HandleAsync(Request request, CancellationToken cancellationToken = default)
         {
-            // logic here
+            // actual logic here
         }
 
         // definew your custom signature
         [HttpGet("custom_path")]
-        public async Task<ActionResult<Result>> Post([FromQuery]string id, [FromBody]BodyModel model, CancellationToken cancellationToken)
+        public async Task<ActionResult<Result>> CustomMethod([FromQuery]string id, [FromBody]BodyModel model, CancellationToken cancellationToken)
         {
             // map to the view model
             var requestModel = new Request() {
@@ -97,6 +97,12 @@ if you need need an endpoint with a custom route, a mix of parameters coming fro
         }
     }
 ```
+
+I've had good success with creating a folder structure like below.
+
+![Folder Structure](/assets/simple-ednpoints-folderstructure.png)
+
+You can take this one step further and create a **folder per feature group**, then put each endpoint specific folder inside that if you want as well. I recommend keeping the view models in the same folder as it's easier to find related code when they sit next to each other.
 
 ---
 

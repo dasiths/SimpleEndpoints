@@ -5,30 +5,29 @@ using SimpleEndpoints.Core;
 
 namespace SimpleEndpoints.VerbScoped
 {
-
-    public abstract class AsyncDeleteEndpoint<TRequest> : AsyncEndpointWithRequest<TRequest>
+    public interface IDeleteEndpoint
     {
-        [HttpDelete]
+    }
+
+    public abstract class AsyncDeleteEndpoint<TRequest> : AsyncEndpointWithRequest<TRequest>, IDeleteEndpoint
+    {
         public abstract override Task<IActionResult> HandleAsync(TRequest model,
             CancellationToken cancellationToken = default);
     }
 
-    public abstract class AsyncDeleteEndpoint<TRequest, TResponse> : AsyncEndpoint<TRequest, TResponse>
+    public abstract class AsyncDeleteEndpoint<TRequest, TResponse> : AsyncEndpoint<TRequest, TResponse>, IDeleteEndpoint
     {
-        [HttpDelete]
         public abstract override Task<ActionResult<TResponse>> HandleAsync(TRequest model,
             CancellationToken cancellationToken = default);
     }
 
-    public abstract class DeleteEndpoint<TRequest> : EndpointWithRequest<TRequest>
+    public abstract class DeleteEndpoint<TRequest> : EndpointWithRequest<TRequest>, IDeleteEndpoint
     {
-        [HttpDelete]
         public abstract override IActionResult Handle(TRequest model);
     }
 
-    public abstract class DeleteEndpoint<TRequest, TResponse> : Endpoint<TRequest, TResponse>
+    public abstract class DeleteEndpoint<TRequest, TResponse> : Endpoint<TRequest, TResponse>, IDeleteEndpoint
     {
-        [HttpDelete]
         public abstract override ActionResult<TResponse> Handle(TRequest model);
     }
 }

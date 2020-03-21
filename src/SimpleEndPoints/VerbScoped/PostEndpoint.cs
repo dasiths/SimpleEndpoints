@@ -5,29 +5,28 @@ using SimpleEndpoints.Core;
 
 namespace SimpleEndpoints.VerbScoped
 {
-
-    public abstract class AsyncPostEndpoint<TRequest> : AsyncEndpointWithRequest<TRequest>
+    public interface IPostEndpoint
     {
-        [HttpPost]
+    }
+    
+    public abstract class AsyncPostEndpoint<TRequest> : AsyncEndpointWithRequest<TRequest>, IPostEndpoint
+    {
         public abstract override Task<IActionResult> HandleAsync(TRequest model, CancellationToken cancellationToken = default);
     }
 
-    public abstract class AsyncPostEndpoint<TRequest, TResponse> : AsyncEndpoint<TRequest, TResponse>
+    public abstract class AsyncPostEndpoint<TRequest, TResponse> : AsyncEndpoint<TRequest, TResponse>, IPostEndpoint
     {
-        [HttpPost]
         public abstract override Task<ActionResult<TResponse>> HandleAsync(TRequest model,
             CancellationToken cancellationToken = default);
     }
 
-    public abstract class PostEndpoint<TRequest> : EndpointWithRequest<TRequest>
+    public abstract class PostEndpoint<TRequest> : EndpointWithRequest<TRequest>, IPostEndpoint
     {
-        [HttpPost]
         public abstract override IActionResult Handle(TRequest model);
     }
 
-    public abstract class PostEndpoint<TRequest, TResponse> : Endpoint<TRequest, TResponse>
+    public abstract class PostEndpoint<TRequest, TResponse> : Endpoint<TRequest, TResponse>, IPostEndpoint
     {
-        [HttpPost]
         public abstract override ActionResult<TResponse> Handle(TRequest model);
     }
 }

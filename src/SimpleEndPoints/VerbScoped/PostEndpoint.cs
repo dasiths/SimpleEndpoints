@@ -9,28 +9,25 @@ namespace SimpleEndpoints.VerbScoped
     public abstract class AsyncPostEndpoint<TRequest> : AsyncEndpointWithRequest<TRequest>
     {
         [HttpPost]
-        public virtual Task<IActionResult> Post(TRequest model, CancellationToken cancellationToken = default) =>
-            HandleAsync(model, cancellationToken);
+        public abstract override Task<IActionResult> HandleAsync(TRequest model, CancellationToken cancellationToken = default);
     }
 
     public abstract class AsyncPostEndpoint<TRequest, TResponse> : AsyncEndpoint<TRequest, TResponse>
     {
         [HttpPost]
-        public virtual Task<ActionResult<TResponse>> Post(TRequest model, CancellationToken cancellationToken = default) =>
-            HandleAsync(model, cancellationToken);
+        public abstract override Task<ActionResult<TResponse>> HandleAsync(TRequest model,
+            CancellationToken cancellationToken = default);
     }
 
     public abstract class PostEndpoint<TRequest> : EndpointWithRequest<TRequest>
     {
         [HttpPost]
-        public virtual IActionResult Post(TRequest model) =>
-            Handle(model);
+        public abstract override IActionResult Handle(TRequest model);
     }
 
     public abstract class PostEndpoint<TRequest, TResponse> : Endpoint<TRequest, TResponse>
     {
         [HttpPost]
-        public virtual ActionResult<TResponse> Post(TRequest model) =>
-            Handle(model);
+        public abstract override ActionResult<TResponse> Handle(TRequest model);
     }
 }

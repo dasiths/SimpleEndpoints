@@ -7,15 +7,9 @@ namespace SimpleEndpoints.Example.Endpoints.SimpleMessage
 {
     public class SimpleMessageEndpoint : AsyncPostEndpoint<SimpleMessage, SimpleResponse>
     {
-        // Override if you want to change the default behaviour such as model binding
-        // Here we force it to use the [FromQuery] model binding instead of the default [FromBody] and define a custom Route
+        // Here we force it to use a custom Route
         [HttpPost("custom")]
-        public override Task<ActionResult<SimpleResponse>> Post([FromQuery]SimpleMessage model, CancellationToken cancellationToken = default)
-        {
-            return base.Post(model, cancellationToken);
-        }
-
-        protected override async Task<ActionResult<SimpleResponse>> HandleAsync(SimpleMessage requestModel, CancellationToken cancellationToken = default)
+        public override async Task<ActionResult<SimpleResponse>> HandleAsync(SimpleMessage requestModel, CancellationToken cancellationToken = default)
         {
             return await Task.FromResult(new SimpleResponse()
             {

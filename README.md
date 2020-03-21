@@ -34,7 +34,7 @@ In the NuGet Package Manager Console, type:
 ```C#
     public class SimpleMessageEndpoint : AsyncGetEndpoint<SimpleMessage, SimpleResponse>
     {
-        protected override async Task<ActionResult<SimpleResponse>> HandleAsync(SimpleMessage requestModel, CancellationToken cancellationToken = default)
+        public override async Task<ActionResult<SimpleResponse>> HandleAsync(SimpleMessage requestModel, CancellationToken cancellationToken = default)
         {	
 	    // Handle in place or dispatch to the domain i.e. return await _someDomainService.HandleAsync(requestModel)
 	

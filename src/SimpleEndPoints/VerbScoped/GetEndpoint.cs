@@ -9,56 +9,52 @@ namespace SimpleEndpoints.VerbScoped
     public abstract class AsyncGetEndpoint : AsyncEndpoint
     {
         [HttpGet]
-        public virtual Task<IActionResult> Get(CancellationToken cancellationToken = default) =>
-            HandleAsync(cancellationToken);
+        public abstract override Task<IActionResult> HandleAsync(CancellationToken cancellationToken = default);
     }
 
     public abstract class AsyncGetEndpointWithRequest<TRequest> : AsyncEndpointWithRequest<TRequest>
     {
         [HttpGet]
-        public virtual Task<IActionResult> Get([FromQuery]TRequest model, CancellationToken cancellationToken = default) =>
-            HandleAsync(model, cancellationToken);
+        public abstract override Task<IActionResult> HandleAsync([FromQuery] TRequest model,
+            CancellationToken cancellationToken = default);
     }
 
     public abstract class AsyncGetEndpoint<TResponse> : AsyncEndpoint<TResponse>
     {
         [HttpGet]
-        public virtual Task<ActionResult<TResponse>> Get(CancellationToken cancellationToken = default) =>
-            HandleAsync(cancellationToken);
+        public abstract override Task<ActionResult<TResponse>> HandleAsync(
+            CancellationToken cancellationToken = default);
     }
 
     public abstract class AsyncGetEndpoint<TRequest, TResponse> : AsyncEndpoint<TRequest, TResponse>
     {
         [HttpGet]
-        public virtual Task<ActionResult<TResponse>> Get([FromQuery]TRequest model, CancellationToken cancellationToken = default) =>
-            HandleAsync(model, cancellationToken);
+        public abstract override Task<ActionResult<TResponse>> HandleAsync([FromQuery] TRequest model,
+            CancellationToken cancellationToken = default);
     }
 
     public abstract class GetEndpoint : Endpoint
     {
         [HttpGet]
-        public virtual IActionResult Get() =>
-            Handle();
+        public abstract override IActionResult Handle();
     }
 
     public abstract class GetEndpoint<TResponse> : Endpoint<TResponse>
     {
         [HttpGet]
-        public virtual ActionResult<TResponse> Get() =>
-            Handle();
+        public abstract override ActionResult<TResponse> Handle();
     }
 
     public abstract class GetEndpointWithRequest<TRequest> : EndpointWithRequest<TRequest>
     {
         [HttpGet]
-        public virtual IActionResult Get([FromQuery]TRequest model) =>
-            Handle(model);
+        public abstract override IActionResult Handle([FromQuery] TRequest model);
     }
 
     public abstract class GetEndpoint<TRequest, TResponse> : Endpoint<TRequest, TResponse>
     {
         [HttpGet]
-        public virtual ActionResult<TResponse> Get([FromQuery]TRequest model) =>
-            Handle(model);
+        public abstract override ActionResult<TResponse> Handle([FromQuery] TRequest model);
     }
 }
+

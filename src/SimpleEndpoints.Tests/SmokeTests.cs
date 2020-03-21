@@ -22,7 +22,7 @@ namespace SimpleEndpoints.Tests
         public async Task When_Calling_Basic_Endpoint_It_Returns_Payload()
         {
             // Arrange
-            var client = _factory.CreateClient();
+            using var client = _factory.CreateClient();
 
             // Act
             var response = await client.GetAsync("/weatherforecast");

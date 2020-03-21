@@ -15,7 +15,7 @@ namespace SimpleEndpoints.Example.Endpoints.WeatherForecast
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-        protected override async Task<ActionResult<List<WeatherForecast>>> HandleAsync(CancellationToken cancellationToken = default)
+        public override async Task<ActionResult<List<WeatherForecast>>> HandleAsync(CancellationToken cancellationToken = default)
         {
             var rng = new Random();
             return await Task.FromResult(Enumerable.Range(1, 5).Select(index => new WeatherForecast

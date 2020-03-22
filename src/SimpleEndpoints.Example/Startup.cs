@@ -9,18 +9,13 @@ namespace SimpleEndpoints.Example
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers(options =>
-            {
-                //Register simple endpoints & configure global route and naming convention
-                options.WithSimpleEndpoints(endpointsConfiguration =>
-                    endpointsConfiguration
-                        .WithRoutePrefix("api")
-                        .WithEndpointNamingConvention("Endpoint"));
-            });
-
-            //This is just so we can use Swagger and could be named accordingly
-            services.AddSimpleEndpointRouting();
-
+            services.AddControllers();
+            
+            services.AddSimpleEndpointRouting(options =>
+                options
+                    .WithRoutePrefix("api/v1")
+                    .WithEndpointNamingConvention("Endpoint"));
+            
             services.AddSwaggerGen(options =>
                 options.SwaggerDoc("v1", new OpenApiInfo {Title = "Simple endpoints", Version = "v1"}));
         }

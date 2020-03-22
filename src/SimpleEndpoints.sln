@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleEndpoints.Example", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleEndpoints", "SimpleEndPoints\SimpleEndpoints.csproj", "{06D8DE86-AC08-452C-882D-6F57CFF4835E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleEndpoints.Tests", "SimpleEndpoints.Tests\SimpleEndpoints.Tests.csproj", "{60D80A29-1FFD-495A-9CF0-9285920F0356}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleEndpoints.Tests", "SimpleEndpoints.Tests\SimpleEndpoints.Tests.csproj", "{60D80A29-1FFD-495A-9CF0-9285920F0356}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

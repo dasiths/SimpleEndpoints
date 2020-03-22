@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Options;
 using Shouldly;
 using SimpleEndpoints.Conventions;
 using SimpleEndpoints.VerbScoped;
@@ -20,7 +21,7 @@ namespace SimpleEndpoints.Tests.Conventions
         {
             //Arrange
             var classAttributes = Attribute.GetCustomAttributes(typeof(TestEndpoint));
-            var conventions = new EndpointRoutingConvention(new SimpleEndpointsConfiguration());
+            var conventions = new EndpointRoutingConvention(Options.Create(new SimpleEndpointsConfiguration()));
             var controller = new ControllerModel(typeof(TestEndpoint).GetTypeInfo(), classAttributes)
             {
                 Selectors =

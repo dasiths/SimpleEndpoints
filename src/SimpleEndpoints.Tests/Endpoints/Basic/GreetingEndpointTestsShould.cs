@@ -23,7 +23,7 @@ namespace SimpleEndpoints.Tests.Endpoints.Basic
             using var client = _factory.CreateClient();
 
             // Act
-            var response = await client.GetAsync("/api/v1/GreetingAsync?name=peterparker");
+            var response = await client.GetAsync("GreetingAsync?name=peterparker");
             var responseContent = JsonConvert.DeserializeObject<GreetingResponse>(await response.Content.ReadAsStringAsync());
             
             // Assert
@@ -38,7 +38,7 @@ namespace SimpleEndpoints.Tests.Endpoints.Basic
             using var client = _factory.CreateClient();
 
             // Act
-            var response = await client.GetAsync("/api/v1/GreetingAsyncGet?name=peterparker");
+            var response = await client.GetAsync("GreetingAsyncGet?name=peterparker");
             var responseContent = JsonConvert.DeserializeObject<GreetingResponse>(await response.Content.ReadAsStringAsync());
             
             // Assert
@@ -53,7 +53,7 @@ namespace SimpleEndpoints.Tests.Endpoints.Basic
             using var client = _factory.CreateClient();
 
             // Act
-            var response = await client.GetAsync("/api/v1/GreetingAsyncGetWithRoute/get?name=peterparker");
+            var response = await client.GetAsync("GreetingAsyncGetWithRoute/get?name=peterparker");
             var responseContent = JsonConvert.DeserializeObject<GreetingResponse>(await response.Content.ReadAsStringAsync());
             
             // Assert

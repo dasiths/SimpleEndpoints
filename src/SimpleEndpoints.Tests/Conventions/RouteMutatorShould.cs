@@ -23,10 +23,10 @@ namespace SimpleEndpoints.Tests.Conventions
             var controller = CreateControllerModel(classAttributes.OfType<RouteAttribute>().First().Template);
 
             //Act
-            mutator.Mutate(controller, new SimpleEndpointsConfiguration());
+            mutator.Mutate(controller, new SimpleEndpointsConfiguration().WithRoutePrefix("api"));
 
             //Assert
-            controller.Selectors[0].AttributeRouteModel.Template.ShouldBe("api/Test");
+            controller.Selectors[0].AttributeRouteModel.Template.ShouldBe("/api/Test");
         }
 
         [Fact]

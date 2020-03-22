@@ -6,7 +6,7 @@ namespace SimpleEndpoints.Conventions
     {
         private const string EndpointString = "endpoint";
 
-        public void Apply(ApplicationModel application)
+        public virtual void Apply(ApplicationModel application)
         {
             foreach (var controller in application.Controllers)
             {

@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using SimpleEndpoints.Conventions;
 using SimpleEndpoints.Core;
 using SimpleEndpoints.Extensions;
+using SimpleEndpoints.Swashbuckle;
 
 namespace SimpleEndpoints.Example
 {
@@ -24,7 +26,14 @@ namespace SimpleEndpoints.Example
         {
             services.AddControllers((options) =>
             {
-                options.AddEndpointRoutingConvention(); // This is required to translate endpoint names
+                options.AddSimpleEndpointsRouting(); // This is required to translate endpoint names
+                options.AddSwashbuckleCompatibilityForSimpleEndpoints(); // this is required to support Swashbuckle
+            });
+
+            // Register the Swagger generator, defining 1 or more Swagger documents
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
             });
         }
 
@@ -37,6 +46,16 @@ namespace SimpleEndpoints.Example
             }
 
             app.UseHttpsRedirection();
+
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
 
             app.UseRouting();
 

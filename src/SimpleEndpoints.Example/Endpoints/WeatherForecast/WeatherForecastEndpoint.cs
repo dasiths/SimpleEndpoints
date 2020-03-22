@@ -8,28 +8,22 @@ using SimpleEndpoints.VerbScoped;
 
 namespace SimpleEndpoints.Example.Endpoints.WeatherForecast
 {
-    public class WeatherForecastEndpoint : AsyncGetEndpoint<int, List<WeatherForecast>>
+    public class WeatherForecastEndpoint : AsyncGetEndpoint<List<WeatherForecast>>
     {
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-        [NonAction]
-        public override async Task<ActionResult<List<WeatherForecast>>> HandleAsync(int someParams, CancellationToken cancellationToken = default)
+        public override async Task<ActionResult<List<WeatherForecast>>> HandleAsync(CancellationToken cancellationToken = default)
         {
             var rng = new Random();
-            return await Task.FromResult(Enumerable.Range(1, someParams).Select(index => new WeatherForecast
+            return await Task.FromResult(Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),
                 TemperatureC = rng.Next(-20, 55),
                 Summary = Summaries[rng.Next(Summaries.Length)]
             }).ToList());
-        }
-
-        public async Task<ActionResult<List<WeatherForecast>>> Get(int count, CancellationToken cancellationToken)
-        {
-            return await this.HandleAsync(count + 5, cancellationToken);
         }
     }
 }

@@ -24,9 +24,14 @@ jobs:
       run: dotnet test
       working-directory: ./src
     - name: Create the package
+      if: github.ref == 'refs/heads/master'
       run: dotnet pack --configuration Release SimpleEndPoints
       working-directory: ./src
-    - name: Publish the package to NUGET.ORG    
+    - name: Publish the SimpleEndpoints package to NUGET.ORG    
       if: github.ref == 'refs/heads/master'
       run: dotnet nuget push SimpleEndPoints/bin/Release/*.nupkg -k ${{secrets.NUGET_APIKEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
+      working-directory: ./src
+    - name: Publish the SimpleEndpoints.Swashbuckle package to NUGET.ORG    
+      if: github.ref == 'refs/heads/master'
+      run: dotnet nuget push SimpleEndPoints.Swashbuckle/bin/Release/*.nupkg -k ${{secrets.NUGET_APIKEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
       working-directory: ./src

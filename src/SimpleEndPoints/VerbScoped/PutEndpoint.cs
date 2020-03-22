@@ -5,28 +5,29 @@ using SimpleEndpoints.Core;
 
 namespace SimpleEndpoints.VerbScoped
 {
-    public interface IPutEndpoint
-    {
-    }
 
-    public abstract class AsyncPutEndpoint<TRequest> : AsyncEndpointWithRequest<TRequest>, IPutEndpoint
+    [SimpleEndpoint("PUT")]
+    public abstract class AsyncPutEndpoint<TRequest> : AsyncEndpointWithRequest<TRequest>
     {
         public abstract override Task<IActionResult> HandleAsync(TRequest model,
             CancellationToken cancellationToken = default);
     }
 
-    public abstract class AsyncPutEndpoint<TRequest, TResponse> : AsyncEndpoint<TRequest, TResponse>, IPutEndpoint
+    [SimpleEndpoint("PUT")]
+    public abstract class AsyncPutEndpoint<TRequest, TResponse> : AsyncEndpoint<TRequest, TResponse>
     {
         public abstract override Task<ActionResult<TResponse>> HandleAsync(TRequest model,
             CancellationToken cancellationToken = default);
     }
 
-    public abstract class PutEndpoint<TRequest> : EndpointWithRequest<TRequest>, IPutEndpoint
+    [SimpleEndpoint("PUT")]
+    public abstract class PutEndpoint<TRequest> : EndpointWithRequest<TRequest>
     {
         public abstract override IActionResult Handle(TRequest model);
     }
 
-    public abstract class PutEndpoint<TRequest, TResponse> : Endpoint<TRequest, TResponse>, IPutEndpoint
+    [SimpleEndpoint("PUT")]
+    public abstract class PutEndpoint<TRequest, TResponse> : Endpoint<TRequest, TResponse>
     {
         public abstract override ActionResult<TResponse> Handle(TRequest model);
     }

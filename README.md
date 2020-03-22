@@ -53,17 +53,12 @@ In the NuGet Package Manager Console, type:
     {
         // Other services go here
 		
-        services.AddControllers((options) =>
-        {
-            options.AddSimpleEndpointsRouting(); // This is required to translate endpoint names
-
-            // Optional: If you need to support Swashbuckle, you will need the "SimpleEndpoints.Swashbuckle" package too
-            options.AddSwashbuckleCompatibilityForSimpleEndpoints(); // this is required to support Swashbuckle
-        });
+        services.AddControllers();
+        services.AddSimpleEndpointsRouting(); // This is required to translate endpoint names
     }
 ```
 
-5. Navigate to the url `https://localhost:port_number/simplemessage?message=world` and see the result.
+5. Navigate to the URL `https://localhost:port_number/simplemessage?message=world` and see the result.
 
 ---
 

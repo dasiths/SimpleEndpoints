@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Microsoft.Extensions.Options;
 
 namespace SimpleEndpoints.Conventions
 {
@@ -12,9 +13,9 @@ namespace SimpleEndpoints.Conventions
 
         private readonly SimpleEndpointsConfiguration _configuration;
 
-        public EndpointRoutingConvention(SimpleEndpointsConfiguration configuration)
+        public EndpointRoutingConvention(IOptions<SimpleEndpointsConfiguration> configuration)
         {
-            _configuration = configuration;
+            _configuration = configuration.Value;
         }
 
         public void Apply(ApplicationModel application)

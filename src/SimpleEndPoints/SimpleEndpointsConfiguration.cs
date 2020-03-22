@@ -7,7 +7,7 @@ namespace SimpleEndpoints
 
         public SimpleEndpointsConfiguration()
         {
-            RoutePrefix = "api";
+            RoutePrefix = "";
             EndpointReplacementToken = "Endpoint";
         }
 

@@ -10,12 +10,11 @@ namespace SimpleEndpoints.Example
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            
-            services.AddSimpleEndpointRouting(options =>
-                options
-                    .WithRoutePrefix("api/v1")
-                    .WithEndpointNamingConvention("Endpoint"));
-            
+            services.AddSimpleEndpointsRouting();
+
+            //services.AddSimpleEndpointsRouting(options =>
+            //options.WithRoutePrefix("api/v1"));
+
             services.AddSwaggerGen(options =>
                 options.SwaggerDoc("v1", new OpenApiInfo {Title = "Simple endpoints", Version = "v1"}));
         }

@@ -1,5 +1,7 @@
+using System.Linq;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Controllers;
+using SimpleEndpoints.Core;
 using SimpleEndpoints.VerbScoped;
 
 namespace SimpleEndpoints.Conventions
@@ -23,21 +25,10 @@ namespace SimpleEndpoints.Conventions
                     {
                         if (apiDescription.ActionDescriptor is ControllerActionDescriptor controller)
                         {
-                            if (typeof(IDeleteEndpoint).IsAssignableFrom(controller.ControllerTypeInfo))
+                            if (controller.ControllerTypeInfo.GetCustomAttributes(typeof(SimpleEndpointAttribute),
+                                true).FirstOrDefault() is SimpleEndpointAttribute attribute)
                             {
-                                apiDescription.HttpMethod = "DELETE";
-                            }
-                            if (typeof(IGetEndpoint).IsAssignableFrom(controller.ControllerTypeInfo))
-                            {
-                                apiDescription.HttpMethod = "GET";
-                            }
-                            if (typeof(IPostEndpoint).IsAssignableFrom(controller.ControllerTypeInfo))
-                            {
-                                apiDescription.HttpMethod = "POST";
-                            }
-                            if (typeof(IPutEndpoint).IsAssignableFrom(controller.ControllerTypeInfo))
-                            {
-                                apiDescription.HttpMethod = "PUT";
+                                apiDescription.HttpMethod = attribute.HttpVerb;
                             }
                         }
                     }

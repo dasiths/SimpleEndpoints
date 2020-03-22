@@ -13,18 +13,22 @@ namespace SimpleEndpoints.Conventions
             var routeBuilder = new StringBuilder();
             var routeTemplate = controller.Selectors[0].AttributeRouteModel.Template;
 
-            if (routeTemplate.Equals(EndpointPlaceholder, StringComparison.OrdinalIgnoreCase))
+            if (routeTemplate.IndexOf(EndpointPlaceholder, StringComparison.OrdinalIgnoreCase) >= 0)
             {
-                routeBuilder
-                    .Append($"{configuration.RoutePrefix}/")
-                    .Append(routeTemplate.Replace($"{EndpointPlaceholder}",
-                        controller.ControllerName.Replace(configuration.EndpointReplacementToken, string.Empty)));
+                if (!string.IsNullOrWhiteSpace(configuration.RoutePrefix))
+                {
+                    routeBuilder
+                        .Append($"/{configuration.RoutePrefix}/");
+                }
+
+                routeBuilder.Append(routeTemplate.Replace($"{EndpointPlaceholder}",
+                    controller.ControllerName.Replace(configuration.EndpointReplacementToken, string.Empty)));
             }
             else
             {
                 routeBuilder.Append(routeTemplate);
             }
-            
+
             controller.Selectors[0].AttributeRouteModel.Template = routeBuilder.ToString();
         }
     }

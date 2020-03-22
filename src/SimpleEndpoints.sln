@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleEndpoints", "SimpleEn
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleEndpoints.Tests", "SimpleEndpoints.Tests\SimpleEndpoints.Tests.csproj", "{60D80A29-1FFD-495A-9CF0-9285920F0356}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleEndpoints.Swashbuckle", "SimpleEndpoints.Swashbuckle\SimpleEndpoints.Swashbuckle.csproj", "{2AE58DD8-87F7-4136-8F61-9ECFB9A3B728}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{60D80A29-1FFD-495A-9CF0-9285920F0356}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60D80A29-1FFD-495A-9CF0-9285920F0356}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{60D80A29-1FFD-495A-9CF0-9285920F0356}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2AE58DD8-87F7-4136-8F61-9ECFB9A3B728}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2AE58DD8-87F7-4136-8F61-9ECFB9A3B728}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2AE58DD8-87F7-4136-8F61-9ECFB9A3B728}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2AE58DD8-87F7-4136-8F61-9ECFB9A3B728}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

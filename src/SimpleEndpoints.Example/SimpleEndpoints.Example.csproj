@@ -9,8 +9,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SimpleEndpoints.Swashbuckle\SimpleEndpoints.Swashbuckle.csproj" />
     <ProjectReference Include="..\SimpleEndPoints\SimpleEndpoints.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.2.0" />
   </ItemGroup>
 
 

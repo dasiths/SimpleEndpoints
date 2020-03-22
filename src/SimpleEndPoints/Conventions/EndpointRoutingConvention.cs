@@ -1,22 +1,31 @@
 ﻿using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Microsoft.Extensions.Options;
 
 namespace SimpleEndpoints.Conventions
 {
-    public class EndpointRoutingConvention: IApplicationModelConvention
+    public sealed class EndpointRoutingConvention : IApplicationModelConvention
     {
-        private const string EndpointString = "endpoint";
+        private readonly IConventionMutator[] _conventionMutators =
+        {
+            new RouteMutator(),
+            new HttpMethodMetadataMutator()
+        };
 
-        public virtual void Apply(ApplicationModel application)
+        private readonly SimpleEndpointsConfiguration _configuration;
+
+        public EndpointRoutingConvention(IOptions<SimpleEndpointsConfiguration> configuration)
+        {
+            _configuration = configuration.Value;
+        }
+
+        public void Apply(ApplicationModel application)
         {
             foreach (var controller in application.Controllers)
             {
-                controller.Selectors[0].AttributeRouteModel.Template = controller
-                    .Selectors[0]
-                    .AttributeRouteModel
-                    .Template
-                    .Replace($"[{EndpointString}]", 
-                        controller.ControllerName.Substring(0,
-                        controller.ControllerName.Length - EndpointString.Length));
+                foreach (var mutator in _conventionMutators)
+                {
+                    mutator.Mutate(controller, _configuration);
+                }
             }
         }
     }

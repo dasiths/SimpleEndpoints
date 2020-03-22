@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Description>Swashbuckle support for SimpleEndpoints.
+A simple, convention-based, endpoint per action pattern implementation for AspNetCore 3.0+</Description>
+    <Copyright>2020 Dasith Wijesiriwardena</Copyright>
+    <PackageProjectUrl>https://github.com/dasiths/SimpleEndpoints</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/dasiths/SimpleEndpoints</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <PackageTags>aspnetcore api controller endpoints swashbuckle</PackageTags>
+    <Version>1.2.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.2.0" />
+  </ItemGroup>
+
+</Project>

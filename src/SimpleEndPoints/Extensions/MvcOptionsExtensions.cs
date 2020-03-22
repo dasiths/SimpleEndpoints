@@ -8,7 +8,7 @@ namespace SimpleEndpoints.Extensions
 {
     public static class MvcOptionsExtensions
     {
-        public static void AddEndpointRoutingConvention(this MvcOptions options)
+        public static void AddSimpleEndpointsRouting(this MvcOptions options)
         {
             options.Conventions.Add(new EndpointRoutingConvention());
         }

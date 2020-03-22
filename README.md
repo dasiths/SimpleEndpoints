@@ -55,7 +55,10 @@ In the NuGet Package Manager Console, type:
 		
         services.AddControllers((options) =>
         {
-            options.AddEndpointRoutingConvention(); // This is required to translate endpoint names
+            options.AddSimpleEndpointsRouting(); // This is required to translate endpoint names
+
+            // Optional: If you need to support Swashbuckle, you will need the "SimpleEndpoints.Swashbuckle" package too
+            options.AddSwashbuckleCompatibilityForSimpleEndpoints(); // this is required to support Swashbuckle
         });
     }
 ```

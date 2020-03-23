@@ -1,6 +1,8 @@
 using System;
+using System.Linq;
 using System.Text;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using SimpleEndpoints.Extensions;
 
 namespace SimpleEndpoints.Conventions
 {
@@ -11,25 +13,34 @@ namespace SimpleEndpoints.Conventions
         public void Mutate(ControllerModel controller, SimpleEndpointsConfiguration configuration)
         {
             var routeBuilder = new StringBuilder();
-            var routeTemplate = controller.Selectors[0].AttributeRouteModel.Template;
 
-            if (routeTemplate.IndexOf(EndpointPlaceholder, StringComparison.OrdinalIgnoreCase) >= 0)
+            if (controller.Selectors.Any())
             {
-                if (!string.IsNullOrWhiteSpace(configuration.RoutePrefix))
+                var routeTemplate = controller.Selectors[0].AttributeRouteModel.Template;
+
+                if (routeTemplate.IndexOf(EndpointPlaceholder, StringComparison.OrdinalIgnoreCase) >= 0)
                 {
-                    routeBuilder
-                        .Append($"/{configuration.RoutePrefix}/");
+                    if (!string.IsNullOrWhiteSpace(configuration.RoutePrefix))
+                    {
+                        routeBuilder
+                            .Append($"{configuration.RoutePrefix}/");
+                    }
+
+                    routeBuilder.Append(
+                        routeTemplate.ReplaceCaseInsensitive(
+                            $"{EndpointPlaceholder}",
+                            controller.ControllerName.ReplaceCaseInsensitive(
+                                configuration.EndpointReplacementToken, 
+                                string.Empty)));
+                }
+                else
+                {
+                    routeBuilder.Append(routeTemplate);
                 }
 
-                routeBuilder.Append(routeTemplate.Replace($"{EndpointPlaceholder}",
-                    controller.ControllerName.Replace(configuration.EndpointReplacementToken, string.Empty)));
-            }
-            else
-            {
-                routeBuilder.Append(routeTemplate);
+                controller.Selectors[0].AttributeRouteModel.Template = routeBuilder.ToString();
             }
 
-            controller.Selectors[0].AttributeRouteModel.Template = routeBuilder.ToString();
         }
     }
 }

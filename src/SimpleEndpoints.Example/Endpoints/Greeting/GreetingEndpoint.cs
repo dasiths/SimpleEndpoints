@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using SimpleEndpoints.Core;
 using SimpleEndpoints.VerbScoped;
 
-namespace SimpleEndpoints.Example.Endpoints.Basic
+namespace SimpleEndpoints.Example.Endpoints.Greeting
 {
     public class GreetingRequest
     {
@@ -60,7 +60,7 @@ namespace SimpleEndpoints.Example.Endpoints.Basic
         }
     }
 
-    //We get strange results when extending AsyncGetEndpoint and [HttpPost], we now expect a POST but swagger will send a GET
+    //We can extend AsyncGetEndpoint and [HttpPost], we now expect a POST
     [Route("api/greeting")]
     public class GreetingAsyncGetWithContradictoryRouteEndpoint : AsyncGetEndpoint<GreetingRequest, GreetingResponse>
     {

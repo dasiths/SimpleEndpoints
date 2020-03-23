@@ -26,7 +26,7 @@ namespace SimpleEndpoints.Tests.Conventions
             mutator.Mutate(controller, new SimpleEndpointsConfiguration().WithRoutePrefix("api"));
 
             //Assert
-            controller.Selectors[0].AttributeRouteModel.Template.ShouldBe("/api/Test");
+            controller.Selectors[0].AttributeRouteModel.Template.ShouldBe("api/Test");
         }
 
         [Fact]

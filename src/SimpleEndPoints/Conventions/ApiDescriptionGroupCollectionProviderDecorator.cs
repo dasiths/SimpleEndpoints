@@ -25,10 +25,13 @@ namespace SimpleEndpoints.Conventions
                     {
                         if (apiDescription.ActionDescriptor is ControllerActionDescriptor controller)
                         {
-                            if (controller.ControllerTypeInfo.GetCustomAttributes(typeof(SimpleEndpointAttribute),
-                                true).FirstOrDefault() is SimpleEndpointAttribute attribute)
+                            if (apiDescription.HttpMethod is null)
                             {
-                                apiDescription.HttpMethod = attribute.HttpVerb;
+                                if (controller.ControllerTypeInfo.GetCustomAttributes(typeof(SimpleEndpointAttribute),
+                                    true).FirstOrDefault() is SimpleEndpointAttribute attribute)
+                                {
+                                    apiDescription.HttpMethod = attribute.HttpVerb;
+                                }
                             }
                         }
                     }

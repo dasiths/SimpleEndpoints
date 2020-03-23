@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Shouldly;
-using SimpleEndpoints.Example.Endpoints.Basic;
+using SimpleEndpoints.Example.Endpoints.Greeting;
 using SimpleEndpoints.Tests.Shared;
 using Xunit;
 

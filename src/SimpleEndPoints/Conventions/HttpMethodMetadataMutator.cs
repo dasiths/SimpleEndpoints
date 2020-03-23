@@ -15,7 +15,10 @@ namespace SimpleEndpoints.Conventions
             {
                 if (controller.Selectors.Any())
                 {
-                    controller.Selectors[0].EndpointMetadata.Add(new HttpMethodMetadata(new[] { (attribute).HttpVerb }));
+                    if (!controller.Selectors[0].EndpointMetadata.Any(m => m is HttpMethodMetadata))
+                    {
+                        controller.Selectors[0].EndpointMetadata.Add(new HttpMethodMetadata(new[] { (attribute).HttpVerb }));
+                    }
                 }
             }
         }

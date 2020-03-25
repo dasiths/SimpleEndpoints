@@ -2,11 +2,10 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using SimpleEndpoints.Core;
-using SimpleEndpoints.VerbScoped;
 
-namespace SimpleEndpoints.Conventions
+namespace SimpleEndpoints.Routing
 {
-    internal class ApiDescriptionGroupCollectionProviderDecorator : IApiDescriptionGroupCollectionProvider
+    public class ApiDescriptionGroupCollectionProviderDecorator : IApiDescriptionGroupCollectionProvider
     {
         private readonly IApiDescriptionGroupCollectionProvider _inner;
 

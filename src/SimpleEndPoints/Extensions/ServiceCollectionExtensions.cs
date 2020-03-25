@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using SimpleEndpoints.Conventions;
+using SimpleEndpoints.Enrichers;
+using SimpleEndpoints.Routing;
 
 namespace SimpleEndpoints.Extensions
 {
@@ -26,6 +27,10 @@ namespace SimpleEndpoints.Extensions
         public static IServiceCollection AddSimpleEndpointsRouting(this IServiceCollection services,
             Action<SimpleEndpointsConfiguration> configure = null)
         {
+            // order of registration is order of invocation for enrichers
+            services.AddSingleton<IEndpointMetadataEnricher, RouteEndpointMetadataEnricher>();
+            services.AddSingleton<IEndpointMetadataEnricher, HttpMethodEndpointMetadataEnricher>();
+
             services.AddSingleton<EndpointRoutingConvention>();
             services.AddSingleton<IConfigureOptions<MvcOptions>, ConfigureMvcOptionsForSimpleEndpoints>();
 

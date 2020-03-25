@@ -2,15 +2,22 @@ using System;
 using System.Linq;
 using System.Text;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Microsoft.Extensions.Options;
 using SimpleEndpoints.Extensions;
 
-namespace SimpleEndpoints.Conventions
+namespace SimpleEndpoints.Enrichers
 {
-    internal class RouteMutator : IConventionMutator
+    public class RouteEndpointMetadataEnricher : IEndpointMetadataEnricher
     {
         private const string EndpointPlaceholder = "[endpoint]";
+        private readonly SimpleEndpointsConfiguration _simpleEndpointsConfiguration;
 
-        public void Mutate(ControllerModel controller, SimpleEndpointsConfiguration configuration)
+        public RouteEndpointMetadataEnricher(IOptions<SimpleEndpointsConfiguration> simpleEndpointsConfiguration)
+        {
+            _simpleEndpointsConfiguration = simpleEndpointsConfiguration.Value;
+        }
+
+        public void Enrich(ControllerModel controller, Action<ControllerModel> next)
         {
             var routeBuilder = new StringBuilder();
 
@@ -20,17 +27,17 @@ namespace SimpleEndpoints.Conventions
 
                 if (routeTemplate.IndexOf(EndpointPlaceholder, StringComparison.OrdinalIgnoreCase) >= 0)
                 {
-                    if (!string.IsNullOrWhiteSpace(configuration.RoutePrefix))
+                    if (!string.IsNullOrWhiteSpace(_simpleEndpointsConfiguration.RoutePrefix))
                     {
                         routeBuilder
-                            .Append($"{configuration.RoutePrefix}/");
+                            .Append($"{_simpleEndpointsConfiguration.RoutePrefix}/");
                     }
 
                     routeBuilder.Append(
                         routeTemplate.ReplaceCaseInsensitive(
                             $"{EndpointPlaceholder}",
                             controller.ControllerName.ReplaceCaseInsensitive(
-                                configuration.EndpointReplacementToken, 
+                                _simpleEndpointsConfiguration.EndpointReplacementToken,
                                 string.Empty)));
                 }
                 else
@@ -41,6 +48,7 @@ namespace SimpleEndpoints.Conventions
                 controller.Selectors[0].AttributeRouteModel.Template = routeBuilder.ToString();
             }
 
+            next(controller);
         }
     }
 }

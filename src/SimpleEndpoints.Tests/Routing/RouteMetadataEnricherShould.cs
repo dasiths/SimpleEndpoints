@@ -5,25 +5,26 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Microsoft.Extensions.Options;
 using Shouldly;
-using SimpleEndpoints.Conventions;
+using SimpleEndpoints.Enrichers;
 using SimpleEndpoints.VerbScoped;
 using Xunit;
 
-namespace SimpleEndpoints.Tests.Conventions
+namespace SimpleEndpoints.Tests.Routing
 {
-    public class RouteMutatorShould
+    public class RouteMetadataEnricherShould
     {
         [Fact]
         public void MapRoute_ReplacingPlaceholderWithEndpointName()
         {
             //Arrange
-            var mutator = new RouteMutator();
+            var enricher = new RouteEndpointMetadataEnricher(Options.Create(new SimpleEndpointsConfiguration().WithRoutePrefix("api")));
             var classAttributes = Attribute.GetCustomAttributes(typeof(TestEndpoint));
             var controller = CreateControllerModel(classAttributes.OfType<RouteAttribute>().First().Template);
 
             //Act
-            mutator.Mutate(controller, new SimpleEndpointsConfiguration().WithRoutePrefix("api"));
+            enricher.Enrich(controller, c => { });
 
             //Assert
             controller.Selectors[0].AttributeRouteModel.Template.ShouldBe("api/Test");
@@ -33,11 +34,11 @@ namespace SimpleEndpoints.Tests.Conventions
         public void MapRoute_HonouringRouteAttribute()
         {
             //Arrange
-            var mutator = new RouteMutator();
+            var enricher = new RouteEndpointMetadataEnricher(Options.Create(new SimpleEndpointsConfiguration()));
             var controller = CreateControllerModel("my-route");
 
             //Act
-            mutator.Mutate(controller, new SimpleEndpointsConfiguration());
+            enricher.Enrich(controller, c => {});
 
             //Assert
             controller.Selectors[0].AttributeRouteModel.Template.ShouldBe("my-route");

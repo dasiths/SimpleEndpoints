@@ -7,23 +7,23 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Routing;
 using Shouldly;
-using SimpleEndpoints.Conventions;
+using SimpleEndpoints.Enrichers;
 using SimpleEndpoints.VerbScoped;
 using Xunit;
 
-namespace SimpleEndpoints.Tests.Conventions
+namespace SimpleEndpoints.Tests.Routing
 {
-    public class HttpMethodMetadataMutatorShould
+    public class HttpMethodMetadataEnricherShould
     {
         [Fact]
         public void MapHttpDeleteFromAsyncGetEndpointBaseClass()
         {
             //Arrange
-            var mutator = new HttpMethodMetadataMutator();
+            var enricher = new HttpMethodEndpointMetadataEnricher();
             var controller = CreateController(typeof(TestDeleteEndpoint));
 
             //Act
-            mutator.Mutate(controller, new SimpleEndpointsConfiguration());
+            enricher.Enrich(controller, c => { });
 
             //Assert
             controller.Selectors[0].EndpointMetadata.Count.ShouldBe(1);
@@ -36,11 +36,11 @@ namespace SimpleEndpoints.Tests.Conventions
         public void MapHttpGetFromAsyncGetEndpointBaseClass()
         {
             //Arrange
-            var mutator = new HttpMethodMetadataMutator();
+            var enricher = new HttpMethodEndpointMetadataEnricher();
             var controller = CreateController(typeof(TestGetEndpoint));
 
             //Act
-            mutator.Mutate(controller, new SimpleEndpointsConfiguration());
+            enricher.Enrich(controller, c => { });
 
             //Assert
             controller.Selectors[0].EndpointMetadata.Count.ShouldBe(1);
@@ -53,11 +53,11 @@ namespace SimpleEndpoints.Tests.Conventions
         public void MapHttpPostFromAsyncGetEndpointBaseClass()
         {
             //Arrange
-            var mutator = new HttpMethodMetadataMutator();
+            var enricher = new HttpMethodEndpointMetadataEnricher();
             var controller = CreateController(typeof(TestPostEndpoint));
 
             //Act
-            mutator.Mutate(controller, new SimpleEndpointsConfiguration());
+            enricher.Enrich(controller, c => { });
 
             //Assert
             controller.Selectors[0].EndpointMetadata.Count.ShouldBe(1);
@@ -70,11 +70,11 @@ namespace SimpleEndpoints.Tests.Conventions
         public void MapHttpPutFromAsyncGetEndpointBaseClass()
         {
             //Arrange
-            var mutator = new HttpMethodMetadataMutator();
+            var enricher = new HttpMethodEndpointMetadataEnricher();
             var controller = CreateController(typeof(TestPutEndpoint));
 
             //Act
-            mutator.Mutate(controller, new SimpleEndpointsConfiguration());
+            enricher.Enrich(controller, c => { });
 
             //Assert
             controller.Selectors[0].EndpointMetadata.Count.ShouldBe(1);

@@ -1,14 +1,14 @@
+using System;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Routing;
 using SimpleEndpoints.Core;
-using SimpleEndpoints.VerbScoped;
 
-namespace SimpleEndpoints.Conventions
+namespace SimpleEndpoints.Enrichers
 {
-    internal class HttpMethodMetadataMutator : IConventionMutator
+    public class HttpMethodEndpointMetadataEnricher : IEndpointMetadataEnricher
     {
-        public void Mutate(ControllerModel controller, SimpleEndpointsConfiguration configuration)
+        public void Enrich(ControllerModel controller, Action<ControllerModel> next)
         {
             if (controller.ControllerType
                 .GetCustomAttributes(typeof(SimpleEndpointAttribute), true).FirstOrDefault() is SimpleEndpointAttribute attribute)
@@ -21,6 +21,8 @@ namespace SimpleEndpoints.Conventions
                     }
                 }
             }
+
+            next(controller);
         }
     }
 }

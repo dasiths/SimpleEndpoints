@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -8,11 +9,12 @@ using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Options;
 using Shouldly;
-using SimpleEndpoints.Conventions;
+using SimpleEndpoints.Enrichers;
+using SimpleEndpoints.Routing;
 using SimpleEndpoints.VerbScoped;
 using Xunit;
 
-namespace SimpleEndpoints.Tests.Conventions
+namespace SimpleEndpoints.Tests.Routing
 {
     public class EndpointRoutingConventionShould
     {
@@ -21,7 +23,12 @@ namespace SimpleEndpoints.Tests.Conventions
         {
             //Arrange
             var classAttributes = Attribute.GetCustomAttributes(typeof(TestEndpoint));
-            var conventions = new EndpointRoutingConvention(Options.Create(new SimpleEndpointsConfiguration()));
+            var conventions = new EndpointRoutingConvention(new List<IEndpointMetadataEnricher>()
+            {
+                new RouteEndpointMetadataEnricher(Options.Create(new SimpleEndpointsConfiguration())),
+                new HttpMethodEndpointMetadataEnricher()
+            });
+
             var controller = new ControllerModel(typeof(TestEndpoint).GetTypeInfo(), classAttributes)
             {
                 Selectors =

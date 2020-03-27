@@ -50,5 +50,7 @@ namespace SimpleEndpoints.Enrichers
 
             next(controller);
         }
+
+        public int Order => _simpleEndpointsConfiguration.RouteEndpointMetadataEnricherOrder;
     }
 }

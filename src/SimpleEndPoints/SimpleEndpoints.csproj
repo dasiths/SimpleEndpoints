@@ -10,7 +10,7 @@
     <RepositoryUrl>https://github.com/dasiths/SimpleEndpoints</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
     <PackageTags>aspnetcore api controller endpoints</PackageTags>
-    <Version>1.3.2</Version>
+    <Version>1.4.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

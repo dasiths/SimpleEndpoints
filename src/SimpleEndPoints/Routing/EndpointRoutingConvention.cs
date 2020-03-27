@@ -21,7 +21,7 @@ namespace SimpleEndpoints.Routing
 
             foreach (var controller in application.Controllers)
             {
-                var apply = _metadataEnrichers.Reverse()
+                var apply = _metadataEnrichers.OrderBy(e => e.Order)
                     .Aggregate(lastAction, (action, enricher) => c => enricher.Enrich(c, action));
                 apply(controller);
             }

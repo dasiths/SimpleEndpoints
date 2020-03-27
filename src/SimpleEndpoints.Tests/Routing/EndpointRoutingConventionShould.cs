@@ -26,7 +26,7 @@ namespace SimpleEndpoints.Tests.Routing
             var conventions = new EndpointRoutingConvention(new List<IEndpointMetadataEnricher>()
             {
                 new RouteEndpointMetadataEnricher(Options.Create(new SimpleEndpointsConfiguration())),
-                new HttpMethodEndpointMetadataEnricher()
+                new HttpMethodEndpointMetadataEnricher(Options.Create(new SimpleEndpointsConfiguration()))
             });
 
             var controller = new ControllerModel(typeof(TestEndpoint).GetTypeInfo(), classAttributes)

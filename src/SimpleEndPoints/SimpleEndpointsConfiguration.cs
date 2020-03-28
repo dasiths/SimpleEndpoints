@@ -1,3 +1,7 @@
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using SimpleEndpoints.Core;
+
 namespace SimpleEndpoints
 {
     public class SimpleEndpointsConfiguration
@@ -7,18 +11,20 @@ namespace SimpleEndpoints
         private const int DefaultEndpointApiDescriptionProviderOrder = 100;
 
         public string RoutePrefix { get; private set; }
-        public string EndpointReplacementToken { get; private set; }
+        public string EndpointNamingConventionEnding { get; private set; }
         public int EndpointApiDescriptionProviderOrder { get; private set; }
         public int RouteEndpointMetadataEnricherOrder { get; private set; }
         public int HttpMethodEndpointMetadataEnricherOrder { get; private set; }
+        public ReadOnlyDictionary<string, string> RouteTokenDictionary { get; private set; }
 
         public SimpleEndpointsConfiguration()
         {
-            RoutePrefix = "";
-            EndpointReplacementToken = "Endpoint";
+            RoutePrefix = string.Empty;
+            EndpointNamingConventionEnding = nameof(Endpoint);
             RouteEndpointMetadataEnricherOrder = DefaultRouteEndpointMetadataEnricherOrder;
             HttpMethodEndpointMetadataEnricherOrder = DefaultHttpMethodEndpointMetadataEnricherOrder;
             EndpointApiDescriptionProviderOrder = DefaultEndpointApiDescriptionProviderOrder;
+            RouteTokenDictionary = new ReadOnlyDictionary<string, string>(new Dictionary<string, string>());
         }
 
         public SimpleEndpointsConfiguration WithRoutePrefix(string prefix)
@@ -27,9 +33,15 @@ namespace SimpleEndpoints
             return this;
         }
 
-        public SimpleEndpointsConfiguration WithEndpointNamingConvention(string endpointReplacementToken)
+        public SimpleEndpointsConfiguration WithEndpointNamingConventionEndingWith(string endpointNamingConventionEnding)
         {
-            EndpointReplacementToken = endpointReplacementToken;
+            EndpointNamingConventionEnding = endpointNamingConventionEnding;
+            return this;
+        }
+
+        public SimpleEndpointsConfiguration WithRouteTokens(Dictionary<string, string> tokens)
+        {
+            RouteTokenDictionary = new ReadOnlyDictionary<string, string>(tokens);
             return this;
         }
     }

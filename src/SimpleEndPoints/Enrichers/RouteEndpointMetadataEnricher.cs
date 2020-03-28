@@ -37,12 +37,17 @@ namespace SimpleEndpoints.Enrichers
                         routeTemplate.ReplaceCaseInsensitive(
                             $"{EndpointPlaceholder}",
                             controller.ControllerName.ReplaceCaseInsensitive(
-                                _simpleEndpointsConfiguration.EndpointReplacementToken,
+                                _simpleEndpointsConfiguration.EndpointNamingConventionEnding,
                                 string.Empty)));
                 }
                 else
                 {
                     routeBuilder.Append(routeTemplate);
+                }
+
+                foreach (var keyValuePair in _simpleEndpointsConfiguration.RouteTokenDictionary)
+                {
+                    routeBuilder.Replace($"[{keyValuePair.Key}]", keyValuePair.Value);
                 }
 
                 controller.Selectors[0].AttributeRouteModel.Template = routeBuilder.ToString();

@@ -61,8 +61,8 @@ namespace SimpleEndpoints.Example.Endpoints.Greeting
     }
 
     //We can extend AsyncGetEndpoint and [HttpPost], we now expect a POST
-    [Route("api/greeting")]
-    public class GreetingAsyncGetWithContradictoryRouteEndpoint : AsyncGetEndpoint<GreetingRequest, GreetingResponse>
+    [Route("api/greeting/[assembly-name]")]
+    public class GreetingAsyncPostWithContradictoryRouteAndHttpMethodEndpoint : AsyncGetEndpoint<GreetingRequest, GreetingResponse>
     {
         [HttpPost]
         public override async Task<ActionResult<GreetingResponse>> HandleAsync([FromQuery] GreetingRequest requestModel,

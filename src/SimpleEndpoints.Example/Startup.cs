@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Reflection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
@@ -9,14 +11,19 @@ namespace SimpleEndpoints.Example
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-            services.AddSimpleEndpointsRouting();
+            var tokenDictionary = new Dictionary<string, string>()
+            {
+                {"assembly-name", Assembly.GetExecutingAssembly().GetName(true).Name}
+            };
 
-            //services.AddSimpleEndpointsRouting(options =>
-            //options.WithRoutePrefix("api/v1"));
+            services.AddControllers();
+            services.AddSimpleEndpointsRouting(options => options
+                .WithRouteTokens(tokenDictionary)
+                .WithRoutePrefix("api/v1")
+            );
 
             services.AddSwaggerGen(options =>
-                options.SwaggerDoc("v1", new OpenApiInfo {Title = "Simple endpoints", Version = "v1"}));
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Simple endpoints", Version = "v1" }));
         }
 
         public void Configure(IApplicationBuilder app)

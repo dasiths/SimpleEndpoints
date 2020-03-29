@@ -71,23 +71,23 @@ The Endpoints are automatically inherited from a [`ControllerBase`](https://docs
 If you really need an endpoint with a custom route, a mix of parameters coming from the Route/Query/Body or need full control over of any aspect then you can do something like this. Each of these class/method attributes works independently of each other and you can pick and choose them as required.
 
 ```c#
-    [Route("api/some-path/[endpoint]")] //results in "api/some-path/mycustom"
-    public class MyCustomEndpoint : AsyncEndpoint<Request, Result>
+    [Route("api/some-path/[endpoint]")] // results in "api/some-path/mycustom"
+    public class MyCustomEndpoint : AsyncEndpoint<Request, Result> // Use the http verb agnostic AsyncEndpoint class
     {
-        [NonAction] // important: mark this as non action to ignore this method when routing
+        [NonAction] // mark this as non action to ignore this method when routing
         public override async Task<ActionResult<Result>> HandleAsync(Request request, CancellationToken cancellationToken = default)
         {
             // actual logic here
         }
 
-        // definew your custom signature
+        // definew your custom signature binding attributes
         [HttpGet("custom_path")]
         public async Task<ActionResult<Result>> CustomMethod([FromQuery]string id, [FromBody]BodyModel model, CancellationToken cancellationToken)
         {
             // map to the view model
             var requestModel = new Request() {
                 id_property = id,
-                model_property - model
+                model_property = model
             }
 
             // pass to the handler method

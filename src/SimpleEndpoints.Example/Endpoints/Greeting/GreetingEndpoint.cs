@@ -10,12 +10,12 @@ namespace SimpleEndpoints.Example.Endpoints.Greeting
     {
         public string Name { get; set; }
     }
-    
+
     public class GreetingResponse
     {
         public string Greeting { get; set; }
     }
-    
+
     //As we are extending AsyncEndpoint we must specify the [HttpGet] attribute   
     public class GreetingAsyncEndpoint : AsyncEndpoint<GreetingRequest, GreetingResponse>
     {
@@ -23,20 +23,20 @@ namespace SimpleEndpoints.Example.Endpoints.Greeting
         public override async Task<ActionResult<GreetingResponse>> HandleAsync([FromQuery] GreetingRequest requestModel,
             CancellationToken cancellationToken = default)
         {
-            return Ok(new GreetingResponse {Greeting = await Task.FromResult($"Hello {requestModel.Name}")});
+            return Ok(new GreetingResponse { Greeting = await Task.FromResult($"Hello {requestModel.Name}") });
         }
     }
-    
+
     //As we now extend AsyncGetEndpoint we know that the action is a Get so it can be omitted
     public class GreetingAsyncGetEndpoint : AsyncGetEndpoint<GreetingRequest, GreetingResponse>
     {
         public override async Task<ActionResult<GreetingResponse>> HandleAsync([FromQuery] GreetingRequest requestModel,
             CancellationToken cancellationToken = default)
         {
-            return Ok(new GreetingResponse {Greeting = await Task.FromResult($"Hello {requestModel.Name}")});
+            return Ok(new GreetingResponse { Greeting = await Task.FromResult($"Hello {requestModel.Name}") });
         }
     }
-    
+
     //We can also overwrite the route segement - /api/GreetingAsyncGetWithRoute/get
     public class GreetingAsyncGetWithRouteEndpoint : AsyncGetEndpoint<GreetingRequest, GreetingResponse>
     {
@@ -44,7 +44,7 @@ namespace SimpleEndpoints.Example.Endpoints.Greeting
         public override async Task<ActionResult<GreetingResponse>> HandleAsync([FromQuery] GreetingRequest requestModel,
             CancellationToken cancellationToken = default)
         {
-            return Ok(new GreetingResponse {Greeting = await Task.FromResult($"Hello {requestModel.Name}")});
+            return Ok(new GreetingResponse { Greeting = await Task.FromResult($"Hello {requestModel.Name}") });
         }
     }
 
@@ -56,7 +56,7 @@ namespace SimpleEndpoints.Example.Endpoints.Greeting
         public override async Task<ActionResult<GreetingResponse>> HandleAsync([FromQuery] GreetingRequest requestModel,
             CancellationToken cancellationToken = default)
         {
-            return Ok(new GreetingResponse {Greeting = await Task.FromResult($"Hello {requestModel.Name}")});
+            return Ok(new GreetingResponse { Greeting = await Task.FromResult($"Hello {requestModel.Name}") });
         }
     }
 
@@ -68,7 +68,19 @@ namespace SimpleEndpoints.Example.Endpoints.Greeting
         public override async Task<ActionResult<GreetingResponse>> HandleAsync([FromQuery] GreetingRequest requestModel,
             CancellationToken cancellationToken = default)
         {
-            return Ok(new GreetingResponse {Greeting = await Task.FromResult($"Hello {requestModel.Name}")});
+            return Ok(new GreetingResponse { Greeting = await Task.FromResult($"Hello {requestModel.Name}") });
+        }
+    }
+
+    //Here we are using an endpoint constructed from extending the base class
+    [SimpleEndpoint(HttpVerb.Get)]
+    [Route("custom/[endpoint]")]
+    public class GreetingAsyncGetUsingCustomEndpoint : SimpleEndpointBase
+    {
+        [Route("custom-method")]
+        public async Task<ActionResult<GreetingResponse>> CustomHandleMethod([FromQuery] int id, [FromQuery] string name)
+        {
+            return Ok(new GreetingResponse { Greeting = await Task.FromResult($"Hello {name} with id {id}") });
         }
     }
 }

@@ -1,16 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace SimpleEndpoints.Core
 {
+    [AttributeUsage(AttributeTargets.Class)]
     public sealed class SimpleEndpointAttribute: Attribute
     {
         public readonly string HttpVerb;
 
-        public SimpleEndpointAttribute(string httpVerb)
+        public SimpleEndpointAttribute(HttpVerb httpVerb)
         {
-            HttpVerb = httpVerb;
+            HttpVerb = httpVerb.ToString().ToUpper();
         }
     }
 }

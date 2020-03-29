@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 using Shouldly;
 using SimpleEndpoints.Enrichers;
@@ -25,9 +26,11 @@ namespace SimpleEndpoints.Tests.Routing
             var classAttributes = Attribute.GetCustomAttributes(typeof(TestEndpoint));
             var conventions = new EndpointRoutingConvention(new List<IEndpointMetadataEnricher>()
             {
-                new RouteEndpointMetadataEnricher(Options.Create(new SimpleEndpointsConfiguration())),
-                new HttpMethodEndpointMetadataEnricher(Options.Create(new SimpleEndpointsConfiguration()))
-            });
+                new RouteEndpointMetadataEnricher(Options.Create(new SimpleEndpointsConfiguration()),
+                    NullLogger<RouteEndpointMetadataEnricher>.Instance),
+                new HttpMethodEndpointMetadataEnricher(Options.Create(new SimpleEndpointsConfiguration()),
+                    NullLogger<HttpMethodEndpointMetadataEnricher>.Instance)
+            }, NullLogger<EndpointRoutingConvention>.Instance);
 
             var controller = new ControllerModel(typeof(TestEndpoint).GetTypeInfo(), classAttributes)
             {
@@ -43,22 +46,22 @@ namespace SimpleEndpoints.Tests.Routing
             };
 
             //Act
-            conventions.Apply(new ApplicationModel {Controllers = {controller}});
+            conventions.Apply(new ApplicationModel { Controllers = { controller } });
 
             controller.Selectors[0].AttributeRouteModel.Template.ShouldBe("route");
-            
+
             //Assert
             controller.Selectors[0].EndpointMetadata.Count.ShouldBe(1);
             controller.Selectors[0].EndpointMetadata.First().ShouldBeOfType<HttpMethodMetadata>();
             controller.Selectors[0].EndpointMetadata.OfType<HttpMethodMetadata>().First().HttpMethods
-                .ShouldBe(new[] {"GET"});
+                .ShouldBe(new[] { "GET" });
         }
-        
+
         public class TestEndpoint : AsyncGetEndpoint
         {
             public override async Task<IActionResult> HandleAsync(CancellationToken cancellationToken = default)
             {
-                return await Task.FromResult(Ok(new {Success = true}));
+                return await Task.FromResult(Ok(new { Success = true }));
             }
         }
     }

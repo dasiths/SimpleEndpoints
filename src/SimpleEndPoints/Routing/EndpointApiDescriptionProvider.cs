@@ -1,6 +1,7 @@
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SimpleEndpoints.Core;
 
@@ -8,10 +9,12 @@ namespace SimpleEndpoints.Routing
 {
     public class EndpointApiDescriptionProvider : IApiDescriptionProvider
     {
+        private readonly ILogger<EndpointApiDescriptionProvider> _logger;
         private readonly SimpleEndpointsConfiguration _simpleEndpointsConfiguration;
 
-        public EndpointApiDescriptionProvider(IOptions<SimpleEndpointsConfiguration> simpleEndpointsConfiguration)
+        public EndpointApiDescriptionProvider(IOptions<SimpleEndpointsConfiguration> simpleEndpointsConfiguration, ILogger<EndpointApiDescriptionProvider> logger)
         {
+            _logger = logger;
             _simpleEndpointsConfiguration = simpleEndpointsConfiguration.Value;
         }
 
@@ -22,11 +25,15 @@ namespace SimpleEndpoints.Routing
             {
                 if (apiDescription.ActionDescriptor is ControllerActionDescriptor controller)
                 {
+                    _logger.LogTrace($"{controller.ControllerName}.{controller.ActionName}: {nameof(apiDescription.HttpMethod)} is" +
+                                     $" {apiDescription.HttpMethod ?? "NULL"}");
+
                     if (apiDescription.HttpMethod is null)
                     {
                         if (controller.ControllerTypeInfo.GetCustomAttributes(typeof(SimpleEndpointAttribute),
                             true).FirstOrDefault() is SimpleEndpointAttribute attribute)
                         {
+                            _logger.LogTrace($"Setting {controller.ControllerName} with {nameof(apiDescription.HttpMethod)} of: {attribute.HttpVerb}");
                             apiDescription.HttpMethod = attribute.HttpVerb;
                         }
                     }

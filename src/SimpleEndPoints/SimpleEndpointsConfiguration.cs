@@ -44,5 +44,23 @@ namespace SimpleEndpoints
             RouteTokenDictionary = new ReadOnlyDictionary<string, string>(tokens);
             return this;
         }
+
+        public SimpleEndpointsConfiguration WithEndpointApiDescriptionProviderOrder(int order)
+        {
+            EndpointApiDescriptionProviderOrder = order;
+            return this;
+        }
+
+        public SimpleEndpointsConfiguration WithRouteEndpointMetadataEnricherOrder(int order)
+        {
+            RouteEndpointMetadataEnricherOrder = order;
+            return this;
+        }
+
+        public SimpleEndpointsConfiguration WithHttpMethodEndpointMetadataEnricherOrder(int order)
+        {
+            HttpMethodEndpointMetadataEnricherOrder = order;
+            return this;
+        }
     }
 }

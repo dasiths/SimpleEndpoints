@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 using Shouldly;
 using SimpleEndpoints.Enrichers;
@@ -20,7 +21,8 @@ namespace SimpleEndpoints.Tests.Routing
         public void MapHttpDeleteFromAsyncGetEndpointBaseClass()
         {
             //Arrange
-            var enricher = new HttpMethodEndpointMetadataEnricher(Options.Create(new SimpleEndpointsConfiguration()));
+            var enricher = new HttpMethodEndpointMetadataEnricher(Options.Create(new SimpleEndpointsConfiguration()),
+                NullLogger<HttpMethodEndpointMetadataEnricher>.Instance);
             var controller = CreateController(typeof(TestDeleteEndpoint));
 
             //Act
@@ -37,7 +39,8 @@ namespace SimpleEndpoints.Tests.Routing
         public void MapHttpGetFromAsyncGetEndpointBaseClass()
         {
             //Arrange
-            var enricher = new HttpMethodEndpointMetadataEnricher(Options.Create(new SimpleEndpointsConfiguration()));
+            var enricher = new HttpMethodEndpointMetadataEnricher(Options.Create(new SimpleEndpointsConfiguration()),
+                NullLogger<HttpMethodEndpointMetadataEnricher>.Instance);
             var controller = CreateController(typeof(TestGetEndpoint));
 
             //Act
@@ -54,7 +57,8 @@ namespace SimpleEndpoints.Tests.Routing
         public void MapHttpPostFromAsyncGetEndpointBaseClass()
         {
             //Arrange
-            var enricher = new HttpMethodEndpointMetadataEnricher(Options.Create(new SimpleEndpointsConfiguration()));
+            var enricher = new HttpMethodEndpointMetadataEnricher(Options.Create(new SimpleEndpointsConfiguration()),
+                NullLogger<HttpMethodEndpointMetadataEnricher>.Instance);
             var controller = CreateController(typeof(TestPostEndpoint));
 
             //Act
@@ -71,7 +75,8 @@ namespace SimpleEndpoints.Tests.Routing
         public void MapHttpPutFromAsyncGetEndpointBaseClass()
         {
             //Arrange
-            var enricher = new HttpMethodEndpointMetadataEnricher(Options.Create(new SimpleEndpointsConfiguration()));
+            var enricher = new HttpMethodEndpointMetadataEnricher(Options.Create(new SimpleEndpointsConfiguration()),
+                NullLogger<HttpMethodEndpointMetadataEnricher>.Instance);
             var controller = CreateController(typeof(TestPutEndpoint));
 
             //Act

@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.Extensions.Options;
 using Shouldly;
 using SimpleEndpoints.Enrichers;
@@ -19,7 +20,8 @@ namespace SimpleEndpoints.Tests.Routing
         public void MapRoute_ReplacingPlaceholderWithEndpointName()
         {
             //Arrange
-            var enricher = new RouteEndpointMetadataEnricher(Options.Create(new SimpleEndpointsConfiguration().WithRoutePrefix("api")));
+            var enricher = new RouteEndpointMetadataEnricher(Options.Create(new SimpleEndpointsConfiguration().WithRoutePrefix("api")),
+                NullLogger<RouteEndpointMetadataEnricher>.Instance);
             var classAttributes = Attribute.GetCustomAttributes(typeof(TestEndpoint));
             var controller = CreateControllerModel(classAttributes.OfType<RouteAttribute>().First().Template);
 
@@ -34,7 +36,8 @@ namespace SimpleEndpoints.Tests.Routing
         public void MapRoute_HonouringRouteAttribute()
         {
             //Arrange
-            var enricher = new RouteEndpointMetadataEnricher(Options.Create(new SimpleEndpointsConfiguration()));
+            var enricher = new RouteEndpointMetadataEnricher(Options.Create(new SimpleEndpointsConfiguration()),
+                NullLogger<RouteEndpointMetadataEnricher>.Instance);
             var controller = CreateControllerModel("my-route");
 
             //Act

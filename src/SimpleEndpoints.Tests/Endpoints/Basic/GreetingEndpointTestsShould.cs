@@ -92,5 +92,20 @@ namespace SimpleEndpoints.Tests.Endpoints.Basic
             responseContent.Greeting.ShouldBe("Hello peterparker");
             response.StatusCode.ShouldBe(System.Net.HttpStatusCode.OK);
         }
+
+        [Fact]
+        public async Task GreetingAsyncGetUsingCustomEndpoint()
+        {
+            // Arrange
+            using var client = _factory.CreateClient();
+
+            // Act
+            var response = await client.GetAsync($"{routePrefix}custom/GreetingAsyncGetUsingCustom/custom-method?id=1&name=peterparker");
+            var responseContent = JsonConvert.DeserializeObject<GreetingResponse>(await response.Content.ReadAsStringAsync());
+
+            // Assert
+            responseContent.Greeting.ShouldBe("Hello peterparker with id 1");
+            response.StatusCode.ShouldBe(System.Net.HttpStatusCode.OK);
+        }
     }
 }

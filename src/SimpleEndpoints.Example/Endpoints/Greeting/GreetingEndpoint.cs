@@ -74,7 +74,7 @@ namespace SimpleEndpoints.Example.Endpoints.Greeting
 
     //Here we are using an endpoint constructed from extending the base class
     [SimpleEndpoint(HttpVerb.Get)]
-    [Route("custom/[endpoint]")]
+    [Route("[prefix]custom/[endpoint]")]
     public class GreetingAsyncGetUsingCustomEndpoint : SimpleEndpointBase
     {
         [Route("custom-method")]

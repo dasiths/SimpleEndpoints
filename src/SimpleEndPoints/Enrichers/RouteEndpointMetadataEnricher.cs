@@ -4,13 +4,13 @@ using System.Text;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using SimpleEndpoints.Core;
 using SimpleEndpoints.Extensions;
 
 namespace SimpleEndpoints.Enrichers
 {
     public class RouteEndpointMetadataEnricher : IEndpointMetadataEnricher
     {
-        private const string EndpointPlaceholder = "[endpoint]";
         private readonly ILogger<RouteEndpointMetadataEnricher> _logger;
         private readonly SimpleEndpointsConfiguration _simpleEndpointsConfiguration;
 
@@ -28,36 +28,43 @@ namespace SimpleEndpoints.Enrichers
             if (controller.Selectors.Any())
             {
                 var routeTemplate = controller.Selectors[0].AttributeRouteModel.Template;
-                var containsEndpointPlaceholder =
-                    routeTemplate.IndexOf(EndpointPlaceholder, StringComparison.OrdinalIgnoreCase) >= 0;
+                var containsEndpointRouteToken =
+                    routeTemplate.IndexOf(SimpleEndpointBase.EndpointRouteToken, StringComparison.OrdinalIgnoreCase) >= 0;
+                var containsPrefixRouteToken = 
+                    routeTemplate.IndexOf(SimpleEndpointBase.EndpointPrefixRouteToken, StringComparison.OrdinalIgnoreCase) >= 0;
 
-                _logger.LogTrace($"RouteTemplate is {routeTemplate} and contains {EndpointPlaceholder} = {containsEndpointPlaceholder}");
+                _logger.LogTrace($"RouteTemplate is {routeTemplate}");
+                _logger.LogTrace($"RouteTemplate contains {SimpleEndpointBase.EndpointRouteToken} = {containsEndpointRouteToken}");
+                _logger.LogTrace($"RouteTemplate contains {SimpleEndpointBase.EndpointPrefixRouteToken} = {containsPrefixRouteToken}");
 
-                if (containsEndpointPlaceholder)
+                routeBuilder.Append(routeTemplate);
+
+                if (containsEndpointRouteToken || containsPrefixRouteToken)
                 {
-                    if (!string.IsNullOrWhiteSpace(_simpleEndpointsConfiguration.RoutePrefix))
+                    if (containsPrefixRouteToken)
                     {
                         _logger.LogTrace($"Route prefix of \"{_simpleEndpointsConfiguration.RoutePrefix}/\" applied");
-                        routeBuilder
-                            .Append($"{_simpleEndpointsConfiguration.RoutePrefix}/");
+                        routeBuilder.Replace(
+                            $"{SimpleEndpointBase.EndpointPrefixRouteToken}",
+                            $"{_simpleEndpointsConfiguration.RoutePrefix}/");
                     }
 
-                    var controllerNameWithoutEndpointPlaceholder = controller.ControllerName.ReplaceCaseInsensitive(
-                        _simpleEndpointsConfiguration.EndpointNamingConventionEnding,
-                        string.Empty);
+                    if (containsEndpointRouteToken)
+                    {
+                        var controllerNameWithoutEndpoint = controller.ControllerName.ReplaceCaseInsensitive(
+                            _simpleEndpointsConfiguration.EndpointNamingConventionEnding,
+                            string.Empty);
 
-                    _logger.LogTrace($"Calculated endpoint name: {controllerNameWithoutEndpointPlaceholder}");
-                    routeBuilder.Append(
-                        routeTemplate.ReplaceCaseInsensitive(
-                            $"{EndpointPlaceholder}", controllerNameWithoutEndpointPlaceholder));
-                }
-                else
-                {
-                    routeBuilder.Append(routeTemplate);
+                        _logger.LogTrace($"Calculated endpoint name: {controllerNameWithoutEndpoint}");
+
+                        routeBuilder.Replace(
+                                $"{SimpleEndpointBase.EndpointRouteToken}", controllerNameWithoutEndpoint);
+                    }
                 }
 
                 foreach (var keyValuePair in _simpleEndpointsConfiguration.RouteTokenDictionary)
                 {
+                    _logger.LogTrace($"Replacing custom route token [{keyValuePair.Key}] with {keyValuePair.Value}");
                     routeBuilder.Replace($"[{keyValuePair.Key}]", keyValuePair.Value);
                 }
 

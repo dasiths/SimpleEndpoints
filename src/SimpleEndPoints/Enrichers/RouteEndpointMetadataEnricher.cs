@@ -28,38 +28,42 @@ namespace SimpleEndpoints.Enrichers
             if (controller.Selectors.Any())
             {
                 var routeTemplate = controller.Selectors[0].AttributeRouteModel.Template;
-                var containsEndpointRouteToken =
-                    routeTemplate.IndexOf(SimpleEndpointBase.EndpointRouteToken, StringComparison.OrdinalIgnoreCase) >= 0;
-                var containsPrefixRouteToken = 
-                    routeTemplate.IndexOf(SimpleEndpointBase.EndpointPrefixRouteToken, StringComparison.OrdinalIgnoreCase) >= 0;
 
                 _logger.LogTrace($"RouteTemplate is {routeTemplate}");
-                _logger.LogTrace($"RouteTemplate contains {SimpleEndpointBase.EndpointRouteToken} = {containsEndpointRouteToken}");
-                _logger.LogTrace($"RouteTemplate contains {SimpleEndpointBase.EndpointPrefixRouteToken} = {containsPrefixRouteToken}");
 
                 routeBuilder.Append(routeTemplate);
 
-                if (containsEndpointRouteToken || containsPrefixRouteToken)
+                _logger.LogTrace($"Route prefix of \"{_simpleEndpointsConfiguration.RoutePrefix}/\" applied");
+                routeBuilder.Replace(
+                    $"{SimpleEndpointBase.EndpointPrefixRouteToken}",
+                    $"{_simpleEndpointsConfiguration.RoutePrefix}/");
+
+                var endsWithEndpointName = controller.ControllerName
+                    .EndsWith(_simpleEndpointsConfiguration.EndpointNamingConventionEnding,
+                        StringComparison.OrdinalIgnoreCase);
+
+                _logger.LogTrace($"Endpoint name ends with \"{_simpleEndpointsConfiguration.EndpointNamingConventionEnding}\" = {endsWithEndpointName}");
+
+                if (endsWithEndpointName)
                 {
-                    if (containsPrefixRouteToken)
+                    var controllerNameWithoutEndpoint = controller.ControllerName.Substring(0,
+                        controller.ControllerName.Length - _simpleEndpointsConfiguration.EndpointNamingConventionEnding.Length);
+
+                    if (string.IsNullOrWhiteSpace(controllerNameWithoutEndpoint))
                     {
-                        _logger.LogTrace($"Route prefix of \"{_simpleEndpointsConfiguration.RoutePrefix}/\" applied");
-                        routeBuilder.Replace(
-                            $"{SimpleEndpointBase.EndpointPrefixRouteToken}",
-                            $"{_simpleEndpointsConfiguration.RoutePrefix}/");
+                        _logger.LogTrace($"Calculated name is empty. Reverting to full name.");
+                        controllerNameWithoutEndpoint = controller.ControllerName;
                     }
 
-                    if (containsEndpointRouteToken)
-                    {
-                        var controllerNameWithoutEndpoint = controller.ControllerName.ReplaceCaseInsensitive(
-                            _simpleEndpointsConfiguration.EndpointNamingConventionEnding,
-                            string.Empty);
-
-                        _logger.LogTrace($"Calculated endpoint name: {controllerNameWithoutEndpoint}");
-
-                        routeBuilder.Replace(
-                                $"{SimpleEndpointBase.EndpointRouteToken}", controllerNameWithoutEndpoint);
-                    }
+                    _logger.LogTrace($"Calculated endpoint name: {controllerNameWithoutEndpoint}");
+                    routeBuilder.Replace(
+                        $"{SimpleEndpointBase.EndpointRouteToken}", controllerNameWithoutEndpoint);
+                }
+                else
+                {
+                    _logger.LogTrace($"Calculated endpoint name: {controller.ControllerName}");
+                    routeBuilder.Replace(
+                        $"{SimpleEndpointBase.EndpointRouteToken}", controller.ControllerName);
                 }
 
                 foreach (var keyValuePair in _simpleEndpointsConfiguration.RouteTokenDictionary)
